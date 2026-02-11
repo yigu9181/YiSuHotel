@@ -2,111 +2,200 @@
   height:100vh;
   width:100%;
   background-color: #ebebeb;
-  .advertisement{ 
+  .advertisement{
     display: flex;
     position: absolute;
     font-size:50px;
     color: rgb(0, 0, 0);
     width: 100%;
-    background-color: rgb(248, 145, 61);
-    height:20%;
+    height:22%;
     align-items: center;
     justify-content: center;
     margin: 0 auto;
+    background:url('../../asset/pictures/advertisement2.png') no-repeat;
+    background-size: 100% 100%;
   }
   .message{
     display: flex;
     position: absolute;
-    top:18%;
+    top:21%;
     left:50%;
-    transform: translateX(-50%);   
+    transform: translateX(-50%);
     font-size:50px;
     color: rgb(0, 0, 0);
     width: 97%;
-    background-color: #ffffff;
     height:75%;
     margin:0 auto;
-    border-radius: 2%;
-    box-shadow:0px 0px 5px rgba(0, 0, 0,0.2);
-    .position{
-      display: flex;
+    .pos-time{
+      background-color: #ffffff;
       position: absolute;
-      left:50%;
-      transform: translateX(-50%);   
-      top:10%;
-      width:90%;
-      height:10%;
-      border-radius: 40px;
-      .picker{
+      border-radius: 20px;
+      box-shadow:0px 0px 6px rgba(0, 0, 0,0.1);
+      height:23%;
+      width: 100%;
+      .position{
         display: flex;
         position: absolute;
-        top:49.5%;
-        transform: translateY(-50%);
-        left:3%;
-        font-size: 45px;
-        font-weight: 500;
-      }
-      .arrow-up{
-        display: flex;
-        position: absolute;
-        top:51%;
-        transform: translateY(-50%);
-        left:17%;
-        font-size: 40px;
-        font-weight: 350;
-        color: rgba(0, 0, 0,1);
-        transition: 0.25s linear;
-        transform-origin: 50% 50%;
-      }
-      .arrow-down{
-        transform: translateY(-50%) rotate(180deg);
-      }
-      .input{
-        display: flex;
-        position: absolute;
-        height:80%;
-        top:50%;
-        transform: translateY(-50%);
-        left:27%;
-        width:65%;
-        Input{
+        left:50%;
+        transform: translateX(-50%);
+        top:0%;
+        width:90%;
+        height:45%;
+        border-bottom: rgba(0, 0, 0,0.2) 1px solid;
+        .picker{
+          display: flex;
           position: absolute;
-          top:50%;
-          font-size: 40px;
-          font-weight: 400;
+          top:49.5%;
           transform: translateY(-50%);
-          padding:10px 30px;
-          border-left:rgba(0, 0, 0, 0.2) 2px solid;
+          left:3%;
+          font-size: 45px;
+          font-weight: 500;
+        }
+        .arrow-up{
+          display: flex;
+          position: absolute;
+          top:51%;
+          transform: translateY(-50%);
+          left:17%;
+          font-size: 40px;
+          font-weight: 350;
+          color: rgba(0, 0, 0,1);
+          transition: 0.25s linear;
+          transform-origin: 50% 50%;
+        }
+        .arrow-down{
+          transform: translateY(-50%) rotate(180deg);
+        }
+        .input{
+          display: flex;
+          position: absolute;
+          height:80%;
+          top:50%;
+          transform: translateY(-50%);
+          left:27%;
+          width:65%;
+          Input{
+            position: absolute;
+            top:50%;
+            font-size: 40px;
+            font-weight: 400;
+            transform: translateY(-50%);
+            padding:10px 30px;
+            border-left:rgba(0, 0, 0, 0.2) 2px solid;
+          }
+        }
+        .icon{
+          font-size: 60px;
+          position: absolute;
+          right:3%;
+          top:50%;
+          transform: translateY(-50%);
+          color: #005EDA;
         }
       }
-      .icon{
-        font-size: 60px;
+      .date{
         position: absolute;
-        right:3%;
         top:50%;
-        transform: translateY(-50%);
-        color: #005EDA;
+        width: 90%;
+        left:50%;
+        transform: translateX(-50%);
+        height: 50%;
+        .check-in{
+          position: absolute;
+          left:0;
+          width:38%;
+          text-align: center;
+          height: 100%;
+          .check-in-date{
+            position: absolute;
+            display: flex;
+            font-size: 45px;
+            height:85%;
+            width: 100%;
+            top:22%;
+            left:5%;
+          }
+          .check-in-week{
+            position: absolute;
+            display: flex;
+            font-size: 35px;
+            top:31%;
+            right:0%;
+            font-weight: 500;
+            color: rgba(0, 0, 0, 0.7);
+          }
+        }
+        .decoration{
+          position: absolute;
+          height:4px;
+          width: 5%;
+          background-color: rgb(54, 54, 54);
+          left:41.5%;
+          top:47.5%;
+          transform: translate(-50%,-50%);
+        }
+        .check-out{
+          position: absolute;
+          width:38%;
+          left:45%;
+          text-align: center;
+          height: 100%;
+          .check-out-date{
+            position: absolute;
+            display: flex;
+            font-size: 45px;
+            height:85%;
+            width: 100%;
+            top:22%;
+            left:0%;
+          }
+          .check-out-week{
+            position: absolute;
+            display: flex;
+            font-size: 35px;
+            top:31%;
+            right:5%;
+            font-weight: 500;
+            color: rgba(0, 0, 0, 0.7);
+          }
+        }
+        .time-interval{
+          position: absolute;
+          right: 1%;
+          font-size: 35px;
+          top:48%;
+          transform: translateY(-45%);
+        }
       }
     }
-    .search{
+    .fil-lab{
+      background-color: #ffffff;
       position: absolute;
-      display: flex;
-      height: 9%;
-      width: 90%;
-      bottom: 4%;
-      left:50%;
-      transform: translateX(-50%);   
-      background-color: #0068F7;
-      align-items: center;
-      justify-content: center; 
-      border-radius: 20px 20px 40px 20px;
-      box-shadow:1px 1px 5px rgba(0, 0, 0, 0.5);
-      Text{
-        letter-spacing: 20px;
-        color: #ffffff;
-        font-size: 40px;
-        font-weight: 500;
-        padding-left: 10px;
+      border-radius: 20px;
+      box-shadow:0px 0px 6px rgba(0, 0, 0,0.1);
+      height:73%;
+      width: 100%;
+      top:24%;
+      .search{
+        position: absolute;
+        display: flex;
+        height: 13%;
+        width: 90%;
+        bottom: 5%;
+        left:50%;
+        transform: translateX(-50%);
+        background-color: #0068F7;
+        align-items: center;
+        justify-content: center;
+        border-radius: 20px 20px 20px 20px;
+        box-shadow:1px 1px 5px rgba(0, 0, 0, 0.5);
+        Text{
+          letter-spacing: 20px;
+          color: #ffffff;
+          font-size: 40px;
+          font-weight: 500;
+          padding-left: 10px;
+        }
       }
     }
   }
