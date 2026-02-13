@@ -66,8 +66,8 @@ export default function CalendarPage() {
             const selectedDates = value as Date[]
             if (selectedDates.length === 2) {
               setDate({ startDate: formatDate(selectedDates[0]), endDate: formatDate(selectedDates[1]) })
-              Taro.navigateTo({
-                url: '/pages/index/index',
+              Taro.redirectTo({
+                url: '/pages/index/index'
               })
             }
           }}

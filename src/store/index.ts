@@ -1,9 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit'
 import chooseDateReducer from './date/chooseDate'
+import hotelLabelReducer from './label/hotelLabel'
+import addressReducer from './address/positionAddress'
+
 
 export const store = configureStore({
   reducer: {
-    chooseDate: chooseDateReducer
+    chooseDate: chooseDateReducer,
+    hotelLabel: hotelLabelReducer,
+    address: addressReducer
   },
   // Taro 开发环境开启 Redux DevTools
   devTools: process.env.NODE_ENV !== 'production',

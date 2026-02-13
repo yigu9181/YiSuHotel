@@ -74,6 +74,7 @@
     "@commitlint/config-conventional": "^19.8.1",
     "@tarojs/cli": "4.1.11",
     "@tarojs/plugin-generator": "4.1.11",
+    "@tarojs/plugin-inject": "^4.1.11",
     "@tarojs/vite-runner": "4.1.11",
     "@types/minimatch": "^5",
     "@types/react": "^18.0.0",

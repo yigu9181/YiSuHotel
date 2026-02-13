@@ -2,7 +2,7 @@
   "miniprogramRoot": "dist/",
   "projectname": "HotelBookingSystem",
   "description": "易宿酒店预订平台用户端",
-  "appid": "touristappid",
+  "appid": "wxc7c4b39152a4df87",
   "setting": {
     "urlCheck": false,
     "es6": false,

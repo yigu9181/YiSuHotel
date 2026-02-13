@@ -1,8 +1,9 @@
-import { View, Text,Button,Input,Picker} from '@tarojs/components'
+import { View, Text,Input,Picker, Swiper, SwiperItem, Image } from '@tarojs/components'
 import { useSelector, useDispatch } from 'react-redux'
 import Taro, { useLoad } from '@tarojs/taro'
-import { useState } from 'react'
+import { useState ,useEffect} from 'react'
 import classNames from 'classnames'
+import { setHotelLabel } from '@/store/label/hotelLabel'
 import './index.scss'
 
 
@@ -10,26 +11,52 @@ export default function Index() {
   useLoad(() => {
     console.log('酒店查询页加载')
   })
-  const [array] = useState(['上海', '北京', '广州', '深圳'])
-  const [index, setIndex] = useState(0)
-  const [isOpen, setIsOpen] = useState(false)
-  const onPickerChange = (e) => {
-    setIndex(e.detail.value)
-    setIsOpen(!isOpen)
-  }
-  const rotate=():void=>{
-    setIsOpen(!isOpen)
-  }
+  // 轮播图数据
+  const [bannerList] = useState([
+    {
+      id: 1,
+      image: 'https://img.freepik.com/free-photo/luxury-hotel-building_1127-3374.jpg',
+      title: '豪华酒店促销'
+    },
+    {
+      id: 2,
+      image: 'https://img.freepik.com/free-photo/hotel-room-interior-design_23-2150719458.jpg',
+      title: '商务出行首选'
+    },
+    {
+      id: 3,
+      image: 'https://img.freepik.com/free-photo/tropical-hotel-resort-with-swimming-pool_1203-9680.jpg',
+      title: '度假酒店优惠'
+    }
+  ])
+  const [bannerIndex, setBannerIndex] = useState(0)
   const changeDate=():void=>{
-    console.log('1111111')
-    Taro.navigateTo({
+    Taro.redirectTo({
       url: '/pages/index/calendar/calendar'
     })
   }
+  const toDetailPage=():void=>{
+    Taro.navigateTo({
+      url: '/pages/details/index'
+    })
+  }
+  const toListPage=():void=>{
+    Taro.navigateTo({
+      url: '/pages/list/index'
+    })
+  }
+  const choosePositon=():void=>{
+    console.log('选择位置')
+    Taro.redirectTo({
+      url: '/pages/index/position/position'
+    })
+  }
   const {startDate, endDate} = useSelector((state: any) => state.chooseDate)
+  const {selectedAddress} = useSelector((state: any) => state.address || { selectedAddress: null })
   const getMouth = (str) => String(str).split('/')[1]
   const getDay = (str) => String(str).split('/')[2]
   const getWeek = (str) => '日一二三四五六'.charAt(new Date(str).getDay())
+  // 计算两个日期之间的天数差
   function getDaysBetween(dateStr1: string, dateStr2: string):number {
     // 将字符串转换为 Date 对象（支持 "2024-02-12" 或 "2024/02/12" 格式）
     const date1 = new Date(dateStr1);
@@ -47,18 +74,28 @@ export default function Index() {
   // 酒店星级数组
   const hotelStars = ['2钻/星及以下', '3钻/星', '4钻/星', '5钻/星', '金钻酒店', '铂钻酒店']
 
-  // 快捷标签状态管理
-  const [selectedTags, setSelectedTags] = useState<string[]>([])
-
   // 筛选面板状态管理
   const [filterPanelVisible, setFilterPanelVisible] = useState(false)
 
+  const dispatch = useDispatch()
+
+  const { priceRange, hotelStar, Labels } = useSelector((state: any) => state.hotelLabel)
   // 选中的价格范围
-  const [selectedPrice, setSelectedPrice] = useState<string>('')
+  const [selectedPrice, setSelectedPrice] = useState<string>(priceRange || '')
 
   // 选中的酒店星级
-  const [selectedStar, setSelectedStar] = useState<string>('')
+  const [selectedStar, setSelectedStar] = useState<string>(hotelStar || '')
 
+  // 选中的标签
+  const [selectedTags, setSelectedTags] = useState<string[]>(Labels || [])
+
+  useEffect(() => {
+    dispatch(setHotelLabel({
+      priceRange: selectedPrice,
+      hotelStar: selectedStar,
+      Labels: selectedTags
+    }))
+  }, [selectedPrice, selectedStar, selectedTags, dispatch])
   // 处理价格范围点击
   const handlePriceClick = (price: string) => {
     setSelectedPrice(prev => prev === price ? '' : price)
@@ -100,29 +137,44 @@ export default function Index() {
   }
   return (
     <View className='index'>
-      <View className='advertisement'></View>
+      {/* 轮播图广告 */}
+      <View className='advertisement' onClick={toDetailPage}>
+        <Swiper
+          className='banner-swiper'
+          indicatorColor='#999'
+          indicatorActiveColor='#fff'
+          autoplay
+          interval={3000}
+          duration={500}
+          circular
+          current={bannerIndex}
+          onChange={(e) => setBannerIndex(e.detail.current)}
+        >
+          {bannerList.map((banner) => (
+            <SwiperItem key={banner.id}>
+              <Image
+                className='banner-image'
+                src={banner.image}
+                mode='aspectFill'
+              />
+              <View className='banner-title'>{banner.title}</View>
+            </SwiperItem>
+          ))}
+        </Swiper>
+      </View>
       <View className='message'>
         <View className='pos-time'>
         <View className='position'>
-          <Picker
-            mode='selector'
-            range={array}
-            onChange={onPickerChange}
-            onClick={rotate}
-            onCancel={rotate}
-          >
             <View className='picker'>
-              {array[index]}
+              地点
             </View>
-            <Text className={classNames('iconfont', 'icon-jiantou-copy','arrow-up', {
-            'arrow-down': isOpen
-            })}
-            />
-          </Picker>
           <View className='input'>
-            <Input placeholder='位置/品牌/酒店'></Input>
+            <Input 
+              placeholder='位置/品牌/酒店' 
+              value={selectedAddress?.address || ''}
+            ></Input>
           </View>
-          <View className='iconfont icon-dingwei icon'></View>
+            <View className='iconfont icon-dingwei icon' onClick={choosePositon}></View>
         </View>
         <View className='date' >
           <View className='check-in'onClick={changeDate}>
@@ -141,7 +193,7 @@ export default function Index() {
           <View className='fil-lab'>
             {/* 快捷标签 */}
             <View className='quick-tags'>
-              <Text className='tag-title'>酒店属性</Text>
+              <View className='tag-title'>酒店属性</View>
               <View className='tag-list'>
                 {getSortedTags().map(tag => (
                   <View
@@ -163,7 +215,7 @@ export default function Index() {
               </View>
 
               {/* 筛选面板 */}
-              {filterPanelVisible && (
+              {filterPanelVisible ? (
                 <View className='filter-panel'>
                   {/* 价格范围 */}
                   <View className='filter-section'>
@@ -207,13 +259,32 @@ export default function Index() {
                     </View>
                   </View>
                 </View>
+              ):(
+                  <View className='selected-options'>
+                    {priceRanges.filter(price => price === selectedPrice).map(price => (
+                    <View
+                      key={price}
+                      className='selected-option'
+                    >
+                      <Text>{price}</Text>
+                    </View>
+                  ))}
+                    {hotelStars.filter(star => star === selectedStar).map(star => (
+                      <View
+                        key={star}
+                        className='selected-option'
+                      >
+                        <Text>{star}</Text>
+                      </View>
+                    ))}
+                  </View>
               )}
             </View>
 
             {/* 查询按钮 */}
-            <Button className='search'>
+            <View className='search' onClick={toListPage}>
               <View className='search-text'>查询</View>
-            </Button>
+            </View>
           </View>
         </View>
         </View>
