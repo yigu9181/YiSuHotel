@@ -68,18 +68,6 @@
           border-right:rgba(0, 0, 0, 0.2) 2px solid;
           color:#005EDA;
         }
-        .arrow-up{
-          display: flex;
-          position: absolute;
-          top:52%;
-          transform: translateY(-50%) rotate(90deg);
-          left:17%;
-          font-size: 40px;
-          font-weight: 350;
-          color: rgba(0, 0, 0,1);
-          transition: 0.25s linear;
-          transform-origin: 50% 50%;
-        }
         .input{
           display: flex;
           position: absolute;
@@ -87,7 +75,7 @@
           top:50%;
           transform: translateY(-50%);
           left:20%;
-          width:65%;
+          width:75%;
           Input{
             position: absolute;
             height:100%;
