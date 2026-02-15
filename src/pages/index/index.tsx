@@ -41,6 +41,31 @@ export default function Index() {
     })
   }
   const toListPage=():void=>{
+    // 判断位置和日历是否都已存入
+    if ((!selectedAddress)&&( !startDate || !endDate)) {
+      Taro.showToast({
+        title: '请选择入住时间和位置',
+        icon: 'none',
+        duration: 2000
+      })
+      return
+    }
+    if (!selectedAddress) {
+      Taro.showToast({
+        title: '请选择位置',
+        icon: 'none',
+        duration: 2000
+      })
+      return
+    }
+    if( !startDate || !endDate){
+      Taro.showToast({
+        title: '请选择入住时间',
+        icon: 'none',
+        duration: 2000
+      })
+      return
+    }
     Taro.navigateTo({
       url: '/pages/list/index'
     })
@@ -51,11 +76,45 @@ export default function Index() {
     })
   }
   const {startDate, endDate} = useSelector((state: any) => state.chooseDate)
-  const getMouth = (str) => String(str).split('/')[1]
-  const getDay = (str) => String(str).split('/')[2]
-  const getWeek = (str) => '日一二三四五六'.charAt(new Date(str).getDay())
+  // 获取今天、明天、后天的日期
+  const getTodayTomorrowDayAfter = () => {
+    const today = new Date()
+    const tomorrow = new Date(today)
+    tomorrow.setDate(today.getDate() + 1)
+    const dayAfterTomorrow = new Date(today)
+    dayAfterTomorrow.setDate(today.getDate() + 2)
+    
+    // 格式化日期为 YYYY/MM/DD 格式
+    const formatDate = (date) => {
+      const year = date.getFullYear()
+      const month = String(date.getMonth() + 1).padStart(2, '0')
+      const day = String(date.getDate()).padStart(2, '0')
+      return `${year}/${month}/${day}`
+    }
+    
+    return {
+      today: formatDate(today),
+      tomorrow: formatDate(tomorrow),
+      dayAfterTomorrow: formatDate(dayAfterTomorrow)
+    }
+  }
+  
+  // 判断日期是否是今天、明天或后天
+  const getDateDescription = (dateStr) => {
+    if (!dateStr) return ''
+    const { today, tomorrow, dayAfterTomorrow } = getTodayTomorrowDayAfter()
+    if (dateStr === today) return '今天'
+    if (dateStr === tomorrow) return '明天'
+    if (dateStr === dayAfterTomorrow) return '后天'
+    return ''
+  }
+  
+  const getMouth = (str) => str ? String(str).split('/')[1] : ''
+  const getDay = (str) => str ? String(str).split('/')[2] : ''
+  const getWeek = (str) => str ? '日一二三四五六'.charAt(new Date(str).getDay()) : ''
   // 计算两个日期之间的天数差
   function getDaysBetween(dateStr1: string, dateStr2: string):number {
+    if (!dateStr1 || !dateStr2) return 0;
     // 将字符串转换为 Date 对象（支持 "2024-02-12" 或 "2024/02/12" 格式）
     const date1 = new Date(dateStr1);
     const date2 = new Date(dateStr2);
@@ -176,18 +235,34 @@ export default function Index() {
           </View>
             <View className='iconfont icon-dingwei icon' onClick={choosePositon}></View>
         </View>
-        <View className='date' >
-          <View className='check-in'onClick={changeDate}>
-            <Text className='check-in-date'>{`${getMouth(startDate)}月${getDay(startDate)}日`}</Text>
-            <Text className='check-in-week'>{`周${getWeek(startDate)}`}</Text>
+        {/* 日期选择部分 */}
+        {startDate && endDate ? (
+          <View className='date' >
+            <View className='check-in'onClick={changeDate}>
+              <Text className='check-in-date'>
+                {getDateDescription(startDate) || `${getMouth(startDate)}月${getDay(startDate)}日`}
+              </Text>
+              <Text className='check-in-week'>{`周${getWeek(startDate)}`}</Text>
+            </View>
+            <View className='decoration'></View>
+            <View className='check-out'onClick={changeDate}>
+              <Text className='check-out-date'>
+                {getDateDescription(endDate) || `${getMouth(endDate)}月${getDay(endDate)}日`}
+              </Text>
+              <Text className='check-out-week'>{`周${getWeek(endDate)}`}</Text>
+            </View>
+            <View className='time-interval'>共{getDaysBetween(startDate, endDate)}晚</View>
           </View>
-          <View className='decoration'></View>
-          <View className='check-out'onClick={changeDate}>
-            <Text className='check-out-date'>{`${getMouth(endDate)}月${getDay(endDate)}日`}</Text>
-            <Text className='check-out-week'>{`周${getWeek(endDate)}`}</Text>
+        ) : (
+          <View className='date placeholder' onClick={changeDate}>
+            <View className='placeholder-content'>
+              <Text className='time-label'>入住时间</Text>
+              <View className='time-separator'></View>
+              <Text className='time-placeholder'>请选择入住时间</Text>
+              <Text className='calendar-icon icon-rili iconfont'></Text>
+            </View>
           </View>
-          <View className='time-interval'>共{getDaysBetween(startDate, endDate)}晚</View>
-        </View>
+        )}
         </View>
         <View className='background'>
           <View className='fil-lab'>

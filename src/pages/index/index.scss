@@ -114,73 +114,89 @@
         left:50%;
         transform: translateX(-50%);
         height: 50%;
-        .check-in{
-          position: absolute;
-          left:0;
-          width:38%;
-          text-align: center;
+        display: flex;
+        align-items: center;
+        box-sizing: border-box;
+        padding-left: 2.5%;
+        
+        .check-in, .check-out{
+          display: flex;
+          align-items: center;
           height: 100%;
-          .check-in-date{
-            position: absolute;
-            display: flex;
+          white-space: nowrap;
+          font-weight: 550;
+          color: #005EDA;
+          
+          .check-in-date, .check-out-date{
             font-size: 40px;
-            width: 100%;
-            top:50%;
-            transform: translateY(-50%);
-            left:5%;
           }
-          .check-in-week{
-            position: absolute;
-            display: flex;
+          
+          .check-in-week, .check-out-week{
             font-size: 30px;
-            top:50%;
-            transform: translateY(-40%);
-            right:2%;
             font-weight: 500;
             color: rgba(0, 0, 0, 0.7);
+            margin-left: 5px;
           }
         }
+        
         .decoration{
-          position: absolute;
           height:4px;
-          width: 5%;
+          width: 3%;
           background-color: rgb(54, 54, 54);
-          left:41.5%;
-          top:50%;
-          transform: translate(-50%,-50%);
+          margin: 0 8px;
         }
-        .check-out{
-          position: absolute;
-          width:38%;
-          left:45%;
-          text-align: center;
-          height: 100%;
-          .check-out-date{
-            position: absolute;
-            display: flex;
-            font-size: 40px;
-            top:50%;
-            transform: translateY(-50%);
-            width: 100%;
-            left:0%;
-          }
-          .check-out-week{
-            position: absolute;
-            display: flex;
-            font-size: 30px;
-            top:50%;
-            transform: translateY(-40%);
-            right:7%;
-            font-weight: 500;
-            color: rgba(0, 0, 0, 0.7);
-          }
-        }
+        
         .time-interval{
-          position: absolute;
-          right: 1%;
           font-size: 35px;
-          top:50%;
-          transform: translateY(-45%);
+          white-space: nowrap;
+          margin-left: auto;
+        }
+      }
+      .date.placeholder{
+        position: absolute;
+        top:50%;
+        width: 90%;
+        left:50%;
+        transform: translateX(-50%);
+        height: 50%;
+        display: flex;
+        align-items: center;
+        box-sizing: border-box;
+        padding-left: 3%;
+        cursor: pointer;
+        
+        .placeholder-content{
+          display: flex;
+          align-items: center;
+          width: 100%;
+          
+          .time-label{
+            font-size: 48px;
+            font-weight: 550;
+            color: #005EDA;
+            border-right: rgba(0, 0, 0, 0.2) 2px solid;
+            padding-right: 20px;
+            margin-right: 20px;
+            white-space: nowrap;
+            margin-left:-5px;
+          }
+          
+          .time-separator{
+            display: none;
+          }
+          
+          .time-placeholder{
+            font-size: 40px;  
+            color: #848484;
+            flex: 1;
+          }
+          
+          .calendar-icon{
+            font-size: 45px;
+            color: #005EDA;
+            position: absolute;
+            right:1.5%;
+          }
         }
       }
     }

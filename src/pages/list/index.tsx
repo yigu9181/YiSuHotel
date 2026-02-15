@@ -210,7 +210,10 @@ export default function Index () {
         </View>
         {/*酒店展示组件*/}
         {hotelList.map((i) => (
-          <View className='hotel-item' key={i.id}>
+          <View className='hotel-item' key={i.id} onClick={() => Taro.navigateTo({
+            url: '/pages/details/index?id=' + i.id
+          })}
+          >
             <Image className='hotel-picture' src={i.image} />
             <View className='hotel-text'>
               <View className='hotel-name'>
