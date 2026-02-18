@@ -41,7 +41,8 @@ export default function Index() {
     })
   }
   const toListPage=():void=>{
-    // 判断位置和日历是否都已存入
+    // 注释内容用于判断位置和日历是否都已存入
+    /*
     if ((!selectedAddress)&&( !startDate || !endDate)) {
       Taro.showToast({
         title: '请选择入住时间和位置',
@@ -66,6 +67,7 @@ export default function Index() {
       })
       return
     }
+    */
     Taro.navigateTo({
       url: '/pages/list/index'
     })
@@ -83,7 +85,7 @@ export default function Index() {
     tomorrow.setDate(today.getDate() + 1)
     const dayAfterTomorrow = new Date(today)
     dayAfterTomorrow.setDate(today.getDate() + 2)
-    
+
     // 格式化日期为 YYYY/MM/DD 格式
     const formatDate = (date) => {
       const year = date.getFullYear()
@@ -91,14 +93,14 @@ export default function Index() {
       const day = String(date.getDate()).padStart(2, '0')
       return `${year}/${month}/${day}`
     }
-    
+
     return {
       today: formatDate(today),
       tomorrow: formatDate(tomorrow),
       dayAfterTomorrow: formatDate(dayAfterTomorrow)
     }
   }
-  
+
   // 判断日期是否是今天、明天或后天
   const getDateDescription = (dateStr) => {
     if (!dateStr) return ''
@@ -108,7 +110,7 @@ export default function Index() {
     if (dateStr === dayAfterTomorrow) return '后天'
     return ''
   }
-  
+
   const getMouth = (str) => str ? String(str).split('/')[1] : ''
   const getDay = (str) => str ? String(str).split('/')[2] : ''
   const getWeek = (str) => str ? '日一二三四五六'.charAt(new Date(str).getDay()) : ''
