@@ -119,8 +119,92 @@ export default function Index () {
           </View>
         </View>
       </View>
-      <View className='hotel-date'></View>
-      <View className='hotel-room'></View>
+      <View className='hotel-date'>
+        <View className='date-section'>
+          <View className='date-info'>
+            <View className='date-item'>
+              <Text className='date-day'>1月9日</Text>
+              <Text className='date-week'>今天</Text>
+            </View>
+            <View className='date-separator'>1晚</View>
+            <View className='date-item'>
+              <Text className='date-day'>1月10日</Text>
+              <Text className='date-week'>明天</Text>
+            </View>
+            <View className='date-arrow iconfont icon-jiantou-copy'></View>
+          </View>
+          <View className='date-note'>
+            <Text className='note-text'>当前已过0点，如需今天凌晨6点前入住，请选择"今天凌晨"</Text>
+          </View>
+        </View>
+        <View className='filter-tags'>
+          <View className='filter-tag'>含早餐</View>
+          <View className='filter-tag'>立即确认</View>
+          <View className='filter-tag'>大床房</View>
+          <View className='filter-tag'>双床房</View>
+          <View className='filter-tag'>免费取</View>
+          <View className='filter-tag filter-more'>
+            <Text>筛选</Text>
+            <Text className='iconfont icon-jiantou-copy'></Text>
+          </View>
+        </View>
+      </View>
+      <View className='hotel-room'>
+        <View className='room-item'>
+          <View className='room-image'>
+            <Image src='https://ts3.tc.mm.bing.net/th/id/OIP-C.UyfvxlTYy6MeyKcEOWV0hwHaD4?cb=defcache2&defcache=1&rs=1&pid=ImgDetMain&o=7&rm=3' mode='aspectFill' />
+          </View>
+          <View className='room-info'>
+            <Text className='room-name'>经典双床房</Text>
+            <Text className='room-detail'>2张1.2米单人床 40㎡ 2人入住 5-15层</Text>
+            <View className='room-tags'>
+              <View className='room-tag'>免费取消</View>
+              <View className='room-tag'>含早餐</View>
+              <View className='room-tag'>立即确认</View>
+            </View>
+            <View className='room-price'>
+              <Text className='price'>¥936</Text>
+              <View className='price-btn'>查看房型</View>
+            </View>
+          </View>
+        </View>
+        <View className='room-item'>
+          <View className='room-image'>
+            <Image src='https://staticfile.badazhou.com/20210906/49ebe47328401af3751d33deb84771b1.jpeg' mode='aspectFill' />
+          </View>
+          <View className='room-info'>
+            <Text className='room-name'>高级大床房</Text>
+            <Text className='room-detail'>1张2米大床 45㎡ 2人入住 5-15层</Text>
+            <View className='room-tags'>
+              <View className='room-tag'>免费取消</View>
+              <View className='room-tag'>含早餐</View>
+              <View className='room-tag'>立即确认</View>
+            </View>
+            <View className='room-price'>
+              <Text className='price'>¥1088</Text>
+              <View className='price-btn'>查看房型</View>
+            </View>
+          </View>
+        </View>
+        <View className='room-item'>
+          <View className='room-image'>
+            <Image src='https://trueart-content.oss-cn-shanghai.aliyuncs.com/20190430/200201118_640.jpg#' mode='aspectFill' />
+          </View>
+          <View className='room-info'>
+            <Text className='room-name'>豪华江景房</Text>
+            <Text className='room-detail'>1张2米大床 50㎡ 2人入住 10-15层</Text>
+            <View className='room-tags'>
+              <View className='room-tag'>免费取消</View>
+              <View className='room-tag'>含早餐</View>
+              <View className='room-tag'>立即确认</View>
+            </View>
+            <View className='room-price'>
+              <Text className='price'>¥1588</Text>
+              <View className='price-btn'>查看房型</View>
+            </View>
+          </View>
+        </View>
+      </View>
       <View className='hotel-bottom'>
         <View className='icon-box'>
           <View className='icon-liaotian2 iconfont bottom-icon'>
