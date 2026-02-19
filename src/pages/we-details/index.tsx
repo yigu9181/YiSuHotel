@@ -1,6 +1,6 @@
-import { View, Text, Image, Swiper, SwiperItem } from '@tarojs/components'
+import { View, Text, Image, Swiper, SwiperItem, ScrollView } from '@tarojs/components'
 import Taro, { useLoad } from '@tarojs/taro'
-import React,{ useState } from 'react'
+import React,{ useState, useRef } from 'react'
 import { backToLastPage } from '@/utils/navigate'
 import './index.scss'
 import tagImage from '../../asset/pictures/钻石_填充.png'
@@ -46,6 +46,59 @@ export default function Index () {
       }
     ])
     const [bannerIndex, setBannerIndex] = useState(0)
+    const [showRoomDetail, setShowRoomDetail] = useState(false)
+    const [selectedRoom, setSelectedRoom] = useState(null)
+    const roomRef = useRef(null)
+
+    // 房型数据数组
+    const roomList = [
+      {
+        id: 1,
+        name: '经典双床房',
+        price: 936,
+        image: 'https://ts3.tc.mm.bing.net/th/id/OIP-C.UyfvxlTYy6MeyKcEOWV0hwHaD4?cb=defcache2&defcache=1&rs=1&pid=ImgDetMain&o=7&rm=3',
+        detail: '2张1.2米单人床 40㎡ 2人入住 5-15层',
+        tags: ['免费取消', '含早餐', '立即确认']
+      },
+      {
+        id: 2,
+        name: '高级大床房',
+        price: 1088,
+        image: 'https://staticfile.badazhou.com/20210906/49ebe47328401af3751d33deb84771b1.jpeg',
+        detail: '1张2米大床 45㎡ 2人入住 5-15层',
+        tags: ['免费取消', '含早餐', '立即确认']
+      },
+      {
+        id: 3,
+        name: '豪华江景房',
+        price: 1588,
+        image: 'https://trueart-content.oss-cn-shanghai.aliyuncs.com/20190430/200201118_640.jpg#',
+        detail: '1张2米大床 50㎡ 2人入住 10-15层',
+        tags: ['免费取消', '含早餐', '立即确认']
+      }
+    ]
+
+    // 处理点击底部查看房型按钮，滑动到room板块
+    const handleScrollToRoom = () => {
+      Taro.pageScrollTo({
+        selector: '#roomSection',
+        offsetTop: -100,
+        duration: 500
+      })
+    }
+
+    // 处理点击房型的查看房型按钮，显示上拉框
+    const handleShowRoomDetail = (room) => {
+      setSelectedRoom(room)
+      setShowRoomDetail(true)
+    }
+
+    // 处理关闭上拉框
+    const handleCloseRoomDetail = () => {
+      setShowRoomDetail(false)
+      setSelectedRoom(null)
+    }
+
   return (
     <View className='index'>
       <View className='navigation'>
@@ -150,61 +203,27 @@ export default function Index () {
           </View>
         </View>
       </View>
-      <View className='hotel-room'>
-        <View className='room-item'>
-          <View className='room-image'>
-            <Image src='https://ts3.tc.mm.bing.net/th/id/OIP-C.UyfvxlTYy6MeyKcEOWV0hwHaD4?cb=defcache2&defcache=1&rs=1&pid=ImgDetMain&o=7&rm=3' mode='aspectFill' />
-          </View>
-          <View className='room-info'>
-            <Text className='room-name'>经典双床房</Text>
-            <Text className='room-detail'>2张1.2米单人床 40㎡ 2人入住 5-15层</Text>
-            <View className='room-tags'>
-              <View className='room-tag'>免费取消</View>
-              <View className='room-tag'>含早餐</View>
-              <View className='room-tag'>立即确认</View>
+      <View className='hotel-room' id='roomSection'>
+        {roomList.map((room) => (
+          <View className='room-item' key={room.id}>
+            <View className='room-image'>
+              <Image src={room.image} mode='aspectFill' />
             </View>
-            <View className='room-price'>
-              <Text className='price'>¥936</Text>
-              <View className='price-btn'>查看房型</View>
-            </View>
-          </View>
-        </View>
-        <View className='room-item'>
-          <View className='room-image'>
-            <Image src='https://staticfile.badazhou.com/20210906/49ebe47328401af3751d33deb84771b1.jpeg' mode='aspectFill' />
-          </View>
-          <View className='room-info'>
-            <Text className='room-name'>高级大床房</Text>
-            <Text className='room-detail'>1张2米大床 45㎡ 2人入住 5-15层</Text>
-            <View className='room-tags'>
-              <View className='room-tag'>免费取消</View>
-              <View className='room-tag'>含早餐</View>
-              <View className='room-tag'>立即确认</View>
-            </View>
-            <View className='room-price'>
-              <Text className='price'>¥1088</Text>
-              <View className='price-btn'>查看房型</View>
+            <View className='room-info'>
+              <Text className='room-name'>{room.name}</Text>
+              <Text className='room-detail'>{room.detail}</Text>
+              <View className='room-tags'>
+                {room.tags.map((tag, index) => (
+                  <View className='room-tag' key={index}>{tag}</View>
+                ))}
+              </View>
+              <View className='room-price'>
+                <Text className='price'>¥{room.price}</Text>
+                <View className='price-btn' onClick={() => handleShowRoomDetail(room)}>查看房型</View>
+              </View>
             </View>
           </View>
-        </View>
-        <View className='room-item'>
-          <View className='room-image'>
-            <Image src='https://trueart-content.oss-cn-shanghai.aliyuncs.com/20190430/200201118_640.jpg#' mode='aspectFill' />
-          </View>
-          <View className='room-info'>
-            <Text className='room-name'>豪华江景房</Text>
-            <Text className='room-detail'>1张2米大床 50㎡ 2人入住 10-15层</Text>
-            <View className='room-tags'>
-              <View className='room-tag'>免费取消</View>
-              <View className='room-tag'>含早餐</View>
-              <View className='room-tag'>立即确认</View>
-            </View>
-            <View className='room-price'>
-              <Text className='price'>¥1588</Text>
-              <View className='price-btn'>查看房型</View>
-            </View>
-          </View>
-        </View>
+        ))}
       </View>
       <View className='hotel-bottom'>
         <View className='icon-box'>
@@ -217,8 +236,92 @@ export default function Index () {
             936
           <Text style='font-size: 15px;margin-left:2px'>起</Text>
         </View>
-        <View className='hotel-bottom-checkbtn'>查看房型</View>
+        <View className='hotel-bottom-checkbtn' onClick={handleScrollToRoom}>查看房型</View>
       </View>
+
+      {/* 房型详情上拉框 */}
+      {showRoomDetail && selectedRoom && (
+        <View className='room-detail-popup'>
+          <View className='room-detail-popup-overlay' onClick={handleCloseRoomDetail}></View>
+          <View className='room-detail-popup-content'>
+            <View className='room-detail-popup-header'>
+              <View className='room-detail-popup-close' onClick={handleCloseRoomDetail}>
+                <Text style={{fontSize: 30, color: '#333'}}>×</Text>
+              </View>
+            </View>
+            <ScrollView className='room-detail-popup-scroll' scrollY>
+              <View className='room-detail-popup-image'>
+                <Image src={selectedRoom.image} mode='aspectFill' />
+              </View>
+              <View className='room-detail-popup-info'>
+                <Text className='room-detail-popup-name'>{selectedRoom.name}</Text>
+                <View className='room-detail-popup-features'>
+                  <View className='room-detail-popup-feature'>
+                    <Text className='iconfont icon-mianji'></Text>
+                    <Text>{selectedRoom.detail.split(' ')[1]}</Text>
+                  </View>
+                  <View className='room-detail-popup-feature'>
+                    <Text className='iconfont icon-ceng'></Text>
+                    <Text>{selectedRoom.detail.split(' ')[3]}</Text>
+                  </View>
+                  <View className='room-detail-popup-feature'>
+                    <Text className='iconfont icon-wifi'></Text>
+                    <Text>免费</Text>
+                  </View>
+                  <View className='room-detail-popup-feature'>
+                    <Text className='iconfont icon-chuang'></Text>
+                    <Text>{selectedRoom.detail.split(' ')[0]}</Text>
+                  </View>
+                </View>
+                <View className='room-detail-popup-description'>
+                  <Text className='room-detail-popup-description-title'>房间详情</Text>
+                  <View style={{marginTop: 15}}>
+                    <Text className='room-detail-popup-description-text'>{selectedRoom.detail}</Text>
+                    <Text className='room-detail-popup-description-text'>房间宽敞明亮，配备现代化设施，为您提供舒适的住宿体验。</Text>
+                  </View>
+                </View>
+                <View className='room-detail-popup-amenities'>
+                  <Text className='room-detail-popup-amenities-title'>查看全部设施</Text>
+                  <View style={{marginTop: 15}}>
+                    <View className='room-detail-popup-amenities-list'>
+                      <View className='room-detail-popup-amenity'>空调</View>
+                      <View className='room-detail-popup-amenity'>电视</View>
+                      <View className='room-detail-popup-amenity'>冰箱</View>
+                      <View className='room-detail-popup-amenity'>保险箱</View>
+                      <View className='room-detail-popup-amenity'>免费洗漱用品</View>
+                      <View className='room-detail-popup-amenity'>吹风机</View>
+                    </View>
+                  </View>
+                </View>
+                <View className='room-detail-popup-policy'>
+                  <Text className='room-detail-popup-policy-title'>政策与服务</Text>
+                  <View style={{marginTop: 15}}>
+                    <View className='room-detail-popup-policy-item'>
+                      <Text className='iconfont icon-tishi'></Text>
+                      <Text>退房时间：12:00前</Text>
+                    </View>
+                    <View className='room-detail-popup-policy-item'>
+                      <Text className='iconfont icon-tishi'></Text>
+                      <Text>入住时间：14:00后</Text>
+                    </View>
+                  </View>
+                </View>
+              </View>
+            </ScrollView>
+            <View className='room-detail-popup-bottom'>
+              <View className='room-detail-popup-bottom-service'>
+                <Text className='iconfont icon-liaotian2'></Text>
+                <Text>问客服</Text>
+              </View>
+              <View className='room-detail-popup-bottom-price'>
+                <Text style={{fontSize: 18}}>￥</Text>
+                <Text style={{fontSize: 30, fontWeight: 'bold'}}>{selectedRoom.price}</Text>
+                <Text style={{fontSize: 15, marginLeft: 2}}>起</Text>
+              </View>
+            </View>
+          </View>
+        </View>
+      )}
     </View>
   )
 }
