@@ -51,7 +51,8 @@ export default function Index () {
       star: 5,
       point: 4.8,
       rank: '超棒',
-      like: '4564点评 · 6.3万收藏',
+      like: '4564点评',
+      favorites: '6.3万收藏',
       image: hotelImage1,
       position: '近外滩 · 东方明珠',
       introduction: 'BOSS:25楼是上海知名米其林新荣记',
@@ -66,7 +67,8 @@ export default function Index () {
       star: 5,
       point: 4.9,
       rank: '超棒',
-      like: '3821点评 · 5.8万收藏',
+      like: '3821点评',
+      favorites: '5.8万收藏',
       image: hotelImage2,
       position: '近外滩 · 南京东路',
       introduction: '网红泳池 · 直面外滩三件套',
@@ -81,7 +83,8 @@ export default function Index () {
       star: 5,
       point: 4.7,
       rank: '很棒',
-      like: '8921点评 · 12万收藏',
+      like: '8921点评',
+      favorites: '12万收藏',
       image: hotelImage3,
       position: '外滩 · 南京东路',
       introduction: '百年传奇 · 上海滩地标',
@@ -96,7 +99,8 @@ export default function Index () {
       star: 4,
       point: 4.8,
       rank: '超棒',
-      like: '2156点评 · 3.2万收藏',
+      like: '2156点评',
+      favorites: '3.2万收藏',
       image: hotelImage4,
       position: '陆家嘴 · 环球金融中心',
       introduction: '云端体验 · 85层高空景观',
@@ -111,7 +115,8 @@ export default function Index () {
       star: 4,
       point: 4.6,
       rank: '很棒',
-      like: '1563点评 · 2.1万收藏',
+      like: '1563点评',
+      favorites: '2.1万收藏',
       image: hotelImage5,
       position: '静安区 · 兴业太古汇',
       introduction: '城市绿洲 · 意式极简设计',
@@ -136,11 +141,11 @@ export default function Index () {
               <Text style={{ color: '#000000' }}>入住 </Text>{startDate ? `${getMouth(startDate)}-${getDay(startDate)}(${getWeek(startDate)})` : '12-01'}
             </View>
             <View className='tab-form-checkout'>
-              <Text style={{ color: '#000000' }}>退房 </Text>{endDate ? `${getMouth(endDate)}-${getDay(endDate)}(${getWeek(endDate)})` : '12-05'}
+              <Text style={{ color: '#000000' }}>退房 </Text>{endDate ? `${getMouth(endDate)}-${getDay(endDate)}(${getWeek(endDate)})}` : '12-02'}
             </View>
           </View>
           <View className='tab-form-interval'>
-             {startDate && endDate ? `${getDaysBetween(startDate, endDate)}晚` : '4晚'}
+             {startDate && endDate ? `${getDaysBetween(startDate, endDate)}晚` : '1晚'}
           </View>
           <View className='search'>
             <View className='search-icon icon-sousuobeifen2 iconfont'></View>

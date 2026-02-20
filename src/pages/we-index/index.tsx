@@ -42,7 +42,7 @@ export default function Index() {
   const hotelStars = ['2钻/星及以下', '3钻/星', '4钻/星', '5钻/星', '金钻酒店', '铂钻酒店']
 
   // 筛选面板状态管理
-  const [filterPanelVisible, setFilterPanelVisible] = useState(false)
+  const [filterPanelVisible, setFilterPanelVisible] = useState(true)
 
   const dispatch = useDispatch()
 
@@ -148,16 +148,16 @@ export default function Index() {
           <View className='date' >
             <View className='check-in'onClick={changeDate}>
               <Text className='check-in-date'>
-                {getDateDescription(startDate) || `${getMouth(startDate)}月${getDay(startDate)}日`}
+                { `${getMouth(startDate)}月${getDay(startDate)}日`}
               </Text>
-              <Text className='check-in-week'>{`周${getWeek(startDate)}`}</Text>
+                <Text className='check-in-week'>{getDateDescription(startDate) ||`周${getWeek(startDate)}`}</Text>
             </View>
             <View className='decoration'></View>
             <View className='check-out'onClick={changeDate}>
               <Text className='check-out-date'>
-                {getDateDescription(endDate) || `${getMouth(endDate)}月${getDay(endDate)}日`}
+                { `${getMouth(endDate)}月${getDay(endDate)}日`}
               </Text>
-              <Text className='check-out-week'>{`周${getWeek(endDate)}`}</Text>
+                <Text className='check-out-week'>{getDateDescription(endDate) ||`周${getWeek(endDate)}`}</Text>
             </View>
             <View className='time-interval'>共{getDaysBetween(startDate, endDate)}晚</View>
           </View>
