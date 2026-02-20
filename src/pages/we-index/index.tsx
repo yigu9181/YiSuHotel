@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useLoad } from '@tarojs/taro'
 import { getDateDescription, getMouth, getDay, getWeek, getDaysBetween } from '@/utils/calendar'
 import React,{ useState ,useEffect} from 'react'
+import { setChooseHotel } from '@/store/hotel/chooseHotel'
 import { setHotelLabel } from '@/store/label/hotelLabel'
 import { changeDate, toDetailPage, toListPage, choosePositon } from '@/utils/navigate'
 import './index.scss'
@@ -12,21 +13,24 @@ export default function Index() {
   useLoad(() => {
     console.log('酒店查询页加载')
   })
-  // 轮播图数据
+  // 轮播图数据 - 确保id与实际酒店ID对应
   const [bannerList] = useState([
     {
       id: 1,
-      image: 'https://img.freepik.com/free-photo/luxury-hotel-building_1127-3374.jpg',
+      hotelId: 1, // 对应酒店1
+      image: 'https://ts3.tc.mm.bing.net/th/id/OIP-C.UyfvxlTYy6MeyKcEOWV0hwHaD4?rs=1&pid=ImgDetMain&o=7&rm=3',
       title: '豪华酒店促销'
     },
     {
       id: 2,
-      image: 'https://img.freepik.com/free-photo/hotel-room-interior-design_23-2150719458.jpg',
+      hotelId: 2, // 对应酒店2
+      image: 'https://www.tl-group.com/uploads/20240425/94e075c613beaa3c7cd181e4256f8cff.jpg',
       title: '商务出行首选'
     },
     {
       id: 3,
-      image: 'https://img.freepik.com/free-photo/tropical-hotel-resort-with-swimming-pool_1203-9680.jpg',
+      hotelId: 3, // 对应酒店3
+      image: 'https://img95.699pic.com/photo/50107/0921.jpg_wh860.jpg',
       title: '度假酒店优惠'
     }
   ])
@@ -103,10 +107,21 @@ export default function Index() {
   const handleFilterClick = () => {
     setFilterPanelVisible(!filterPanelVisible)
   }
+
+  // 处理广告点击
+  const advTo=(banner)=>{
+    console.log('Banner clicked:', banner)
+    console.log('Hotel ID from banner:', banner.hotelId)
+    // 使用banner.hotelId来设置酒店ID
+    const hotelIdToUse = banner.hotelId || banner.id
+    console.log('Using hotel ID:', hotelIdToUse)
+    dispatch(setChooseHotel({ hotelId: hotelIdToUse }))
+    toDetailPage()
+  }
   return (
     <View className='index'>
       {/* 轮播图广告 */}
-      <View className='advertisement' onClick={toDetailPage}>
+      <View className='advertisement'>
         <Swiper
           className='banner-swiper'
           indicatorColor='#999'
@@ -124,6 +139,7 @@ export default function Index() {
                 className='banner-image'
                 src={banner.image}
                 mode='aspectFill'
+                onClick={()=>advTo(banner)}
               />
               <View className='banner-title'>{banner.title}</View>
             </SwiperItem>

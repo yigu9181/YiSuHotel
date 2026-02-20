@@ -16,7 +16,7 @@ export default function Index() {
   const [showRoomDetail, setShowRoomDetail] = useState(false)
   const [selectedRoom, setSelectedRoom] = useState<any>(null)
   const [selectingRoom, setSelectingRoom] = useState<any>(null)
-  const hotelId = useSelector((state: any) => state.chooseHotel.id)
+  const hotelId = useSelector((state: any) => state.chooseHotel.hotelId)
   const { startDate, endDate } = useSelector((state: any) => state.chooseDate)
 
   useLoad(() => {
