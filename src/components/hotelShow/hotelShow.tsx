@@ -4,9 +4,20 @@ import { View, Text, Image } from '@tarojs/components'
 import tagImage from '../../asset/pictures/钻石_填充.png'
 import './index.scss'
 
-export default function HotelShow({ i }) {
+export default function HotelShow({ i ,onClick}) {
+  const handleClick = () => {
+    console.log('Hotel clicked:', i)
+    console.log('Hotel ID:', i.hotelId)
+    // 先调用导航
+    listToDetail(i.hotelId)
+    // 然后调用onClick回调
+    if (onClick) {
+      onClick(i.hotelId)
+    }
+  }
+  
   return (
-    <View className='hotel-item' key={i.id} onClick={() => listToDetail(i.id)}>
+    <View className='hotel-item' key={i.id} onClick={handleClick}>
       <Image className='hotel-picture' src={i.image} />
       <View className='hotel-text'>
         <View className='hotel-name'>

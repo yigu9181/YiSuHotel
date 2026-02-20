@@ -5,133 +5,62 @@ import React, { useState } from 'react'
 import { backToLastPage , changeDate } from '@/utils/navigate'
 import { useSelector} from 'react-redux'
 import { getMouth, getDay, getWeek, getDaysBetween, getDateDescription } from '@/utils/calendar'
+import { hotelApi } from '@/utils/api'
 import './index.scss'
 import tagImage from '../../asset/pictures/钻石_填充.png'
 
 export default function Index() {
-  useLoad(() => {
-    console.log('Page loaded.')
-  })
-  const hotel={
-    message:{
-      id: 1,
-      name: '上海陆家嘴禧玥酒店',
-      star: 5,
-      point: 4.8,
-      rank: '超棒',
-      like: '4564点评',
-      favorites: '6.3万收藏',
-      image: '../../asset/pictures/酒店1.png',
-      position: '近外滩 · 东方明珠',
-      address:'浦东新区浦明路868弄3号楼',
-      introduction: 'BOSS:25楼是上海知名米其林新荣记',
-      label: ['免费升房', '新中式风', '一线江景', '免费停车'],
-      Ranking: '上海美景酒店榜 No.16',
-      price: 936,
-      supplement: '钻石贵宾价 满减券 3项优惠98',
-    },
-    bannerList: [
-      {
-        id: 1,
-        image: 'https://ts3.tc.mm.bing.net/th/id/OIP-C.UyfvxlTYy6MeyKcEOWV0hwHaD4?cb=defcache2&defcache=1&rs=1&pid=ImgDetMain&o=7&rm=3'
-      },
-      {
-        id: 2,
-        image: 'https://staticfile.badazhou.com/20210906/49ebe47328401af3751d33deb84771b1.jpeg'
-      },
-      {
-        id: 3,
-        image: 'https://trueart-content.oss-cn-shanghai.aliyuncs.com/20190430/200201118_640.jpg#',
-      }
-    ],
-    facilitiesList: [
-      {
-        text: '2020年开业',
-        icon: 'icon-jiudian'
-      },
-      {
-        text: '新中式风',
-        icon: 'icon-gufengwujianzhongguofenggudaishuan_huaban_huaban'
-      },
-      {
-        text: '免费停车',
-        icon: 'icon-tingche'
-      },
-      {
-        text: '一线江景',
-        icon: 'icon-Golden-GateBridge'
-      },
-      {
-        text: '江景下用餐',
-        icon: 'icon-a-godutch'
-      }
-    ],
-    roomList:[
-      {
-        id: 1,
-        name: '经典双床房',
-        price: 936,
-        image: 'https://ts3.tc.mm.bing.net/th/id/OIP-C.UyfvxlTYy6MeyKcEOWV0hwHaD4?cb=defcache2&defcache=1&rs=1&pid=ImgDetMain&o=7&rm=3',
-        detail: ['2张1.2米单人床' , '40㎡', '2人入住' , '5-15层'],
-        introduction: '房间宽敞明亮，配备现代化设施，为您提供舒适的住宿体验。',
-        tags: ['免费取消', '含早餐', '立即确认']
-      },
-      {
-        id: 2,
-        name: '高级大床房',
-        price: 1088,
-        image: 'https://staticfile.badazhou.com/20210906/49ebe47328401af3751d33deb84771b1.jpeg',
-        detail: ['2张1.2米单人床', '40㎡', '2人入住', '5-15层'],
-        introduction: '房间宽敞明亮，配备现代化设施，为您提供舒适的住宿体验。',
-        tags: ['免费取消', '含早餐', '立即确认']
-      },
-      {
-        id: 3,
-        name: '豪华总统套房',
-        price: 1288,
-        image: 'https://trueart-content.oss-cn-shanghai.aliyuncs.com/20190430/200201118_640.jpg#',
-        detail: ['2张1.2米单人床', '40㎡', '2人入住', '5-15层'],
-        introduction: '房间宽敞明亮，配备现代化设施，为您提供舒适的住宿体验。',
-        tags: ['免费取消', '含早餐', '立即确认']
-      }
-    ],
-    filterTagList: [
-      '免费取消',
-      '含早餐',
-      '大床房',
-      '双床房',
-      '立即确认'
-    ],
-    amenitiesList: [
-      '吹风机',
-      '空调',
-      '电视',
-      '保险箱',
-      '免费洗漱用品',
-      '冰箱',
-      '洗衣机'
-    ],
-    timePolicy: [
-      '14:00',
-      '12:00'
-    ]
-  }
-  interface Room {
-    id: number
-    name: string
-    price: number
-    image: string
-    detail: string[]
-    introduction: string
-    tags: string[]
-  }
-  const [bannerList] = useState(hotel.bannerList)
-  const [facilitiesList] = useState(hotel.facilitiesList)
+  const [hotelMessage, setHotelMessage] = useState<any>(null)
+  const [loading, setLoading] = useState(true)
   const [bannerIndex, setBannerIndex] = useState(0)
   const [showRoomDetail, setShowRoomDetail] = useState(false)
-  const [selectedRoom, setSelectedRoom] = useState<Room | null>(null)
-  const [selectingRoom, setSelectingRoom] = useState<Room | null>(null)
+  const [selectedRoom, setSelectedRoom] = useState<any>(null)
+  const [selectingRoom, setSelectingRoom] = useState<any>(null)
+  const hotelId = useSelector((state: any) => state.chooseHotel.id)
   const { startDate, endDate } = useSelector((state: any) => state.chooseDate)
+
+  useLoad(() => {
+    console.log('Page loaded.')
+    // 获取URL参数中的hotelId
+    const pages = Taro.getCurrentPages()
+    const currentPage = pages[pages.length - 1]
+    const urlParams = currentPage?.options || {}
+    const urlHotelId = urlParams.id
+    console.log('Hotel ID from URL:', urlHotelId)
+    console.log('Hotel ID from Redux:', hotelId)
+    // 优先级：URL参数 > Redux store > 默认值1
+    const idToUse = urlHotelId || hotelId || 1
+    console.log('Using hotel ID:', idToUse)
+    fetchHotelMessage(idToUse)
+  })
+
+  const fetchHotelMessage = async (id: number) => {
+    setLoading(true)
+    try {
+      console.log('Fetching hotel detail for ID:', id)
+      const res = await hotelApi.getHotelDetail(id)
+      console.log('Hotel detail response:', res)
+      if (res.code === 200 && res.data) {
+        console.log('Hotel data received:', res.data)
+        setHotelMessage(res.data)
+      } else {
+        console.error('Invalid response:', res)
+        Taro.showToast({
+          title: '获取酒店信息失败: 无效响应',
+          icon: 'none'
+        })
+      }
+    } catch (error) {
+      console.error('获取酒店信息失败:', error)
+      Taro.showToast({
+        title: '获取酒店信息失败: 网络错误',
+        icon: 'none'
+      })
+    } finally {
+      setLoading(false)
+    }
+  }
+
   // 处理点击底部查看房型按钮，滑动到room板块
   const handleScrollToRoom = () => {
     if (selectedRoom) {
@@ -148,10 +77,12 @@ export default function Index() {
       duration: 500
     })
   }
+
   const handleCheckout =(room)=>{
     setSelectedRoom(room)
     setShowRoomDetail(false)
   }
+
   // 处理点击房型的查看房型按钮，显示上拉框
   const handleShowRoomDetail = (room) => {
     setSelectingRoom(room)
@@ -163,11 +94,27 @@ export default function Index() {
     setShowRoomDetail(false)
   }
 
+  if (loading) {
+    return (
+      <View className='index' style={{ padding: '20px', textAlign: 'center' }}>
+        <Text>加载中...</Text>
+      </View>
+    )
+  }
+
+  if (!hotelMessage) {
+    return (
+      <View className='index' style={{ padding: '20px', textAlign: 'center' }}>
+        <Text>暂无酒店信息</Text>
+      </View>
+    )
+  }
+
   return (
     <View className='index'>
       <View className='navigation'>
         <View className='navigation-return iconfont icon-jiantou-copy' onClick={backToLastPage}></View>
-        <View className='navigation-name'>{hotel.message.name}</View>
+        <View className='navigation-name'>{hotelMessage.message?.name}</View>
       </View>
       <View className='banner'>
         <Swiper
@@ -181,7 +128,7 @@ export default function Index() {
           current={bannerIndex}
           onChange={(e) => setBannerIndex(e.detail.current)}
         >
-          {bannerList.map((banner) => (
+          {hotelMessage.bannerList?.map((banner) => (
             <SwiperItem key={banner.id}>
               <Image
                 className='banner-image'
@@ -200,16 +147,16 @@ export default function Index() {
           <View className='box2'>上榜酒店</View>
         </View>
         <View className='hotel-name'>
-          <Text className='hotel-name-text'>{hotel.message.name}</Text>
+          <Text className='hotel-name-text'>{hotelMessage.message?.name}</Text>
           <View className='hotel-tag-box'>
-            {Array.from({ length: hotel.message.star }, (_, j) => j).map((j) => (
+            {Array.from({ length: hotelMessage.message?.star || 0 }, (_, j) => j).map((j) => (
               <Image className='hotel-tag' key={j} src={tagImage} />
             ))}
           </View>
         </View>
-        <View className='hotel-Ranking'>{hotel.message.Ranking}<View className='icon iconfont icon-jiantou-copy'></View></View>
+        <View className='hotel-Ranking'>{hotelMessage.message?.Ranking}<View className='icon iconfont icon-jiantou-copy'></View></View>
         <View className='hotel-facilities'>
-          {facilitiesList.map((j) => (
+          {hotelMessage.facilitiesList?.map((j) => (
             <View className='hotel-facilities-item' key={j.icon}>
               <View className={`hotel-facilities-item-icon iconfont ${j.icon}`}></View>
               <View className='hotel-facilities-item-text'>{j.text}</View>
@@ -219,16 +166,16 @@ export default function Index() {
         <View className='hotel-eval-pos'>
           <View className='hotel-evaluations'>
             <View className='hotel-evaluation-item'>
-              <View className='hotel-point'>{hotel.message.point}</View>
-              <View className='hotel-rank'>{hotel.message.rank}</View>
-              <View className='hotel-like'>{hotel.message.like}</View>
+              <View className='hotel-point'>{hotelMessage.message?.point}</View>
+              <View className='hotel-rank'>{hotelMessage.message?.rank}</View>
+              <View className='hotel-like'>{hotelMessage.message?.like}</View>
               <View className='iconfont icon-jiantou-copy icon'></View>
             </View>
             <View className='hotel-evaluation'>{`"中式风格装修，舒适安逸"`}</View>
           </View>
           <View className='hotel-position'>
             <View className='hotel-distance'>
-              <Text style='fontWeight:600'>距塘桥地铁站步行1.5公里,约22分钟 |</Text> {hotel.message.position}
+              <Text style='fontWeight:600'>距塘桥地铁站步行1.5公里,约22分钟 |</Text> {hotelMessage.message?.position}
             </View>
             <View className='hotel-icon'>
               <View className='icon icon-dingwei2 iconfont'></View>
@@ -260,7 +207,7 @@ export default function Index() {
           </View>
         </View>
         <View className='filter-tags'>
-          {hotel.filterTagList.map((tag) => (
+          {hotelMessage.filterTagList?.map((tag) => (
             <View className='filter-tag' key={tag}>{tag}</View>
           ))}
           <View className='filter-tag filter-more'>
@@ -270,7 +217,7 @@ export default function Index() {
         </View>
       </View>
       <View className='hotel-room' id='roomSection'>
-        {hotel.roomList.map((room) => (
+        {hotelMessage.roomList?.map((room) => (
           <View className='room-item' key={room.id}>
             <View className='room-image'>
               <Image src={room.image} mode='aspectFill' />
@@ -299,7 +246,7 @@ export default function Index() {
         </View>
         <View className='hotel-price'>
           <Text style='font-size: 18px'>￥</Text>
-          {selectedRoom?selectedRoom.price:hotel.message.price}
+          {selectedRoom?selectedRoom.price:hotelMessage.message?.price}
           <Text style='font-size: 15px;margin-left:2px'>起</Text>
         </View>
         <View className='hotel-bottom-checkbtn' onClick={handleScrollToRoom}>{selectedRoom ? '预订房间':'查看房型'}</View>
@@ -338,7 +285,7 @@ export default function Index() {
                   <Text className='room-detail-popup-amenities-title'>查看全部设施</Text>
                   <View style={{ marginTop: 15 }}>
                     <View className='room-detail-popup-amenities-list'>
-                      {hotel.amenitiesList.map((item, index) => (
+                      {hotelMessage.amenitiesList?.map((item, index) => (
                         <View className='room-detail-popup-amenity' key={index}>{item}</View>
                       ))}
                     </View>
@@ -348,10 +295,10 @@ export default function Index() {
                   <Text className='room-detail-popup-policy-title'>政策与服务</Text>
                   <View style={{ marginTop: 15 }}>
                     <View className='room-detail-popup-policy-item'>
-                      <Text>退房时间：{hotel.timePolicy[0]}前</Text>
+                      <Text>退房时间：{hotelMessage.timePolicy?.[0]}前</Text>
                     </View>
                     <View className='room-detail-popup-policy-item'>
-                      <Text>入住时间：{hotel.timePolicy[1]}后</Text>
+                      <Text>入住时间：{hotelMessage.timePolicy?.[1]}后</Text>
                     </View>
                   </View>
                 </View>
