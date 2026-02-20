@@ -3,104 +3,23 @@
     {
       "id": "1",
       "username": "admin",
-      "password": "123456",
-      "nickname": "管理员",
-      "avatar": "https://randomuser.me/api/portraits/men/1.jpg",
-      "phone": "13800138000",
-      "email": "admin@example.com"
+      "password": "Admin123",
+      "ID": "管理员"
     },
     {
       "id": "2",
-      "username": "user1",
-      "password": "123456",
-      "nickname": "用户1",
-      "avatar": "https://randomuser.me/api/portraits/women/2.jpg",
-      "phone": "13900139000",
-      "email": "user1@example.com"
+      "username": "hhhc123",
+      "password": "780860qwE",
+      "ID": "管理员"
     },
     {
-      "id": "a369",
-      "username": "testuser",
-      "password": "123456",
-      "nickname": "测试用户",
-      "avatar": "https://randomuser.me/api/portraits/men/3.jpg",
-      "phone": "13812345678",
-      "email": "test@example.com"
-    },
-    {
-      "id": "4519",
-      "username": "testuser",
-      "password": "123456",
-      "nickname": "测试用户",
-      "avatar": "https://randomuser.me/api/portraits/men/3.jpg",
-      "phone": "13812345678",
-      "email": "test@example.com"
-    },
-    {
-      "id": "142b",
-      "username": "testuser",
-      "password": "123456",
-      "nickname": "测试用户",
-      "avatar": "https://randomuser.me/api/portraits/men/3.jpg",
-      "phone": "13812345678",
-      "email": "test@example.com"
-    },
-    {
-      "id": "6f16",
-      "username": "testuser",
-      "password": "123456",
-      "nickname": "测试用户",
-      "avatar": "https://randomuser.me/api/portraits/men/3.jpg",
-      "phone": "13812345678",
-      "email": "test@example.com"
-    },
-    {
-      "id": "f076",
-      "username": "testuser",
-      "password": "123456",
-      "nickname": "测试用户",
-      "avatar": "https://randomuser.me/api/portraits/men/3.jpg",
-      "phone": "13812345678",
-      "email": "test@example.com"
-    },
-    {
-      "id": "1921",
-      "username": "testuser",
-      "password": "123456",
-      "nickname": "测试用户",
-      "avatar": "https://randomuser.me/api/portraits/men/3.jpg",
-      "phone": "13812345678",
-      "email": "test@example.com"
-    },
-    {
-      "id": "6692",
-      "username": "testuser",
-      "password": "123456",
-      "nickname": "测试用户",
-      "avatar": "https://randomuser.me/api/portraits/men/3.jpg",
-      "phone": "13812345678",
-      "email": "test@example.com"
-    },
-    {
-      "id": "b96a",
-      "username": "testuser",
-      "password": "123456",
-      "nickname": "测试用户",
-      "avatar": "https://randomuser.me/api/portraits/men/3.jpg",
-      "phone": "13812345678",
-      "email": "test@example.com"
-    },
-    {
-      "id": "1acc",
-      "username": "testuser",
-      "password": "123456",
-      "nickname": "测试用户",
-      "avatar": "https://randomuser.me/api/portraits/men/3.jpg",
-      "phone": "13812345678",
-      "email": "test@example.com"
+      "id": "3",
+      "username": "zhanghao",
+      "password": "325333aA",
+      "ID": "用户"
     }
   ],
-  "hotels":[
+  "hotels": [
     {
       "id": "1",
       "message": {
