@@ -71,6 +71,21 @@
       &::-webkit-scrollbar-track {
         background: transparent;
       }
+      .empty-state{
+        flex-shrink: 0;
+        width: 95%;
+        height: 30%;
+        margin-top: 2%;
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #fff;
+        .empty-text{
+          font-size: 18px;
+          color: #676767;
+        }
+      }
       .user-hotelList-item{
         flex-shrink: 0;
         width: 95%;
@@ -78,6 +93,13 @@
         margin-top: 2%;
         border-radius: 20px;
         position: relative;
+        cursor: pointer;
+        transition: all 0.3s ease;
+
+        &.selected{
+          border: 2px solid #3690f7;
+          box-shadow: 0 0 15px rgba(54, 144, 247, 0.5);
+        }
         .user-hotelList-item-img{
           position: absolute;
           width:25%;
@@ -267,6 +289,9 @@
               .icon{
                 font-size: 24px;
               }
+              &:hover{
+                scale: 0.95;
+              }
             }
             .hotel-operation-item:last-child{
               color: #ff4d4f;
@@ -302,6 +327,18 @@
       background: #fff;
       overflow-y: auto;
       overflow-x: hidden;
+      .no-selection{
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .no-selection-text{
+          font-size: 18px;
+          color: #676767;
+          text-align: center;
+        }
+      }
     }
   }
 }

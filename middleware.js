@@ -206,6 +206,11 @@ module.exports = (req, res, next) => {
       return;
     }
     
+    // 从请求头获取token，这里简化处理，实际应该验证token并获取用户信息
+    const token = req.headers.authorization?.split(' ')[1];
+    // 这里简化处理，假设用户ID为1，实际应该从token中解析
+    const userId = 1;
+    
     const newFavorite = {
       id: db.favorites.length > 0 ? Math.max(...db.favorites.map(f => f.id)) + 1 : 1,
       hotelId: hotel.id,
@@ -215,7 +220,7 @@ module.exports = (req, res, next) => {
       score: hotel.score,
       image: hotel.image,
       collectTime: new Date().toISOString().slice(0, 19).replace('T', ' '),
-      userId: 1
+      userId: userId
     };
     
     db.favorites.push(newFavorite);

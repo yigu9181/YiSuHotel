@@ -14,7 +14,7 @@
     },
     {
       "id": "3",
-      "username": "1111111",
+      "username": "12345",
       "password": "780860qwE",
       "ID": "用户"
     }
@@ -22,6 +22,8 @@
   "hotels": [
     {
       "id": "1",
+      "userId": "3",
+      "status": "已发布",
       "message": {
         "id": 1,
         "name": "上海陆家嘴禧玥酒店",
@@ -159,6 +161,8 @@
     },
     {
       "id": "2",
+      "userId": "3",
+      "status": "已发布",
       "message": {
         "id": 2,
         "name": "上海外滩W酒店",
@@ -295,6 +299,8 @@
     },
     {
       "id": "3",
+      "userId": "3",
+      "status": "已发布",
       "message": {
         "id": 3,
         "name": "上海和平饭店",
@@ -431,6 +437,8 @@
     },
     {
       "id": "4",
+      "userId": "3",
+      "status": "已发布",
       "message": {
         "id": 4,
         "name": "上海柏悦酒店",
@@ -486,7 +494,7 @@
         },
         {
           "text": "管家服务",
-          "icon": ".icon-guanjia"
+          "icon": "icon-guanjia"
         }
       ],
       "roomList": [
@@ -567,6 +575,8 @@
     },
     {
       "id": "5",
+      "userId": "3",
+      "status": "已发布",
       "message": {
         "id": 5,
         "name": "上海素凯泰酒店",

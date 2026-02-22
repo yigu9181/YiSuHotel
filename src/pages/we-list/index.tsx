@@ -23,11 +23,13 @@ export default function Index () {
     try {
       const res = await hotelApi.getHotelList()
       if (res.code === 200 && res.data) {
-        // 提取message部分
-        const messageList = res.data.map((hotel: any) => ({
-          ...hotel.message,
-          hotelId: hotel.id
-        }))
+        // 提取message部分，并过滤出已发布的酒店
+        const messageList = res.data
+          .filter((hotel: any) => hotel.status === '已发布')
+          .map((hotel: any) => ({
+            ...hotel.message,
+            hotelId: hotel.id
+          }))
         setHotelList(messageList)
       }
     } catch (error) {

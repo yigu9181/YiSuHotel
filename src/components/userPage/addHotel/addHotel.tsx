@@ -1,14 +1,21 @@
 import { View, Text, Image ,Input,Picker} from '@tarojs/components'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Taro from '@tarojs/taro'
 
 import './index.scss'
 
-export default function AddHotel({ activeTab }) {
-  const [selectedStar, setSelectedStar] = useState(0);
-  const [hotelImage, setHotelImage] = useState('');
-  const [galleryImages, setGalleryImages] = useState<{id: number, image: string}[]>([]);
-  const [galleryIdCounter, setGalleryIdCounter] = useState(1);
+export default function AddHotel({ activeTab, userInfo, editHotel, submitMode = 'submit' }) {
+  // 表单输入字段状态
+  const [hotelName, setHotelName] = useState('');
+  const [hotelIntroduction, setHotelIntroduction] = useState('');
+  const [hotelPrice, setHotelPrice] = useState('');
+  const [hotelPosition, setHotelPosition] = useState('');
+  const [hotelAddress, setHotelAddress] = useState('');
+  const [checkInTime, setCheckInTime] = useState('');
+  const [checkOutTime, setCheckOutTime] = useState('');
+  const [supplement, setSupplement] = useState('');
+
+  // 酒店标签管理
   const [LabelsNum, setLabelsNum] = useState(0);
   const [Labels, setLabels] = useState<{id: number, text: string}[]>([]);
 
@@ -19,6 +26,15 @@ export default function AddHotel({ activeTab }) {
   // 服务标签管理
   const [ServiceLabelsNum, setServiceLabelsNum] = useState(0);
   const [ServiceLabels, setServiceLabels] = useState<{id: number, text: string}[]>([]);
+
+  // 其他状态
+  const [selectedStar, setSelectedStar] = useState(0);
+  const [hotelImage, setHotelImage] = useState('');
+  const [galleryImages, setGalleryImages] = useState<{id: number, image: string}[]>([]);
+  const [galleryIdCounter, setGalleryIdCounter] = useState(1);
+
+  // 设施图标管理
+  const [selectedFacilities, setSelectedFacilities] = useState<{text: string, icon: string}[]>([]);
 
   // 房间列表管理
   const [rooms, setRooms] = useState<{
@@ -31,6 +47,261 @@ export default function AddHotel({ activeTab }) {
     tags: string[];
   }[]>([]);
   const [roomIdCounter, setRoomIdCounter] = useState(1);
+
+  // 当editHotel变化时，更新表单状态
+  useEffect(() => {
+    console.log('EditHotel updated:', editHotel);
+    // 无论editHotel是否存在，都先重置所有状态
+    setLabelsNum(0);
+    setLabels([]);
+    setFacilitiesLabelsNum(0);
+    setFacilitiesLabels([]);
+    setServiceLabelsNum(0);
+    setServiceLabels([]);
+    setSelectedFacilities([]);
+    setRooms([]);
+    setRoomIdCounter(1);
+    setGalleryImages([]);
+    setGalleryIdCounter(1);
+    setHotelName('');
+    setSelectedStar(0);
+    setHotelImage('');
+    setHotelIntroduction('');
+    setHotelPrice('');
+    setHotelPosition('');
+    setHotelAddress('');
+    setSupplement('');
+    setCheckInTime('');
+    setCheckOutTime('');
+
+    if (editHotel) {
+      // 更新基本信息
+      setHotelName(editHotel.message?.name || '');
+      setSelectedStar(editHotel.message?.star || 0);
+      setHotelImage(editHotel.message?.image || '');
+      setHotelIntroduction(editHotel.message?.introduction || '');
+      setHotelPrice(editHotel.message?.price?.toString() || '');
+      setHotelPosition(editHotel.message?.position || '');
+      setHotelAddress(editHotel.message?.address || '');
+      setSupplement(editHotel.message?.supplement || '');
+
+      // 更新时间政策
+      setCheckInTime(editHotel.timePolicy?.[0] || '');
+      setCheckOutTime(editHotel.timePolicy?.[1] || '');
+
+      // 更新图片库
+      if (editHotel.bannerList && editHotel.bannerList.length > 0) {
+        const images = editHotel.bannerList.map((item, index) => ({
+          id: index + 1,
+          image: item.image
+        }));
+        setGalleryImages(images);
+        setGalleryIdCounter(images.length + 1);
+      }
+
+      // 更新酒店标签
+      console.log('Hotel labels:', editHotel.message?.label);
+      if (editHotel.message?.label && editHotel.message.label.length > 0) {
+        const labels = editHotel.message.label.map((text, index) => ({
+          id: index,
+          text: text
+        }));
+        console.log('Processed hotel labels:', labels);
+        setLabels(labels);
+        setLabelsNum(labels.length);
+      }
+
+      // 更新设施标签
+      console.log('Facilities labels:', editHotel.amenitiesList);
+      if (editHotel.amenitiesList && editHotel.amenitiesList.length > 0) {
+        const facilitiesLabels = editHotel.amenitiesList.map((text, index) => ({
+          id: index,
+          text: text
+        }));
+        console.log('Processed facilities labels:', facilitiesLabels);
+        setFacilitiesLabels(facilitiesLabels);
+        setFacilitiesLabelsNum(facilitiesLabels.length);
+      }
+
+      // 更新服务标签（使用filterTagList作为服务标签数据源）
+      console.log('Service labels:', editHotel.filterTagList);
+      if (editHotel.filterTagList && editHotel.filterTagList.length > 0) {
+        const serviceLabels = editHotel.filterTagList.map((text, index) => ({
+          id: index,
+          text: text
+        }));
+        console.log('Processed service labels:', serviceLabels);
+        setServiceLabels(serviceLabels);
+        setServiceLabelsNum(serviceLabels.length);
+      }
+
+      // 更新设施图标
+      console.log('Facilities list:', editHotel.facilitiesList);
+      if (editHotel.facilitiesList && editHotel.facilitiesList.length > 0) {
+        console.log('Processed facilities list:', editHotel.facilitiesList);
+        setSelectedFacilities(editHotel.facilitiesList);
+      }
+
+      // 更新房间列表
+      if (editHotel.roomList && editHotel.roomList.length > 0) {
+        setRooms(editHotel.roomList);
+        setRoomIdCounter(editHotel.roomList.length + 1);
+      }
+    }
+  }, [editHotel]);
+
+  // 随机数据生成函数
+  const generateRandomPoint = () => {
+    return (Math.random() * 0.5 + 4.5).toFixed(1);
+  };
+
+  const generateRandomLike = () => {
+    return Math.floor(Math.random() * 5000) + 1000;
+  };
+
+  const generateRandomFavorites = () => {
+    const num = (Math.random() * 10 + 1).toFixed(1);
+    return `${num}万收藏`;
+  };
+
+  const getRankByPoint = (point: number) => {
+    if (point >= 4.5 && point <= 5.0) {
+      return '超棒';
+    } else if (point >= 4.0 && point < 4.5) {
+      return '不错';
+    } else {
+      return '一般';
+    }
+  };
+
+  // 生成随机Ranking函数
+  const generateRandomRanking = () => {
+    const categories = ['美景', '历史', '商务', '亲子', '情侣', '度假', '豪华', '经济型'];
+    const randomCategory = categories[Math.floor(Math.random() * categories.length)];
+    const randomNumber = Math.floor(Math.random() * 50) + 1;
+    return `上海${randomCategory}酒店榜 No.${randomNumber}`;
+  };
+
+  // 提交表单处理函数
+  const handleSubmit = () => {
+    Taro.showModal({
+      title: '确认提交',
+      content: '您确定要提交表单吗？提交后数据将打印到控制台。',
+      confirmText: '确定',
+      confirmColor: '#3690f7',
+      cancelText: '取消',
+      success: (res) => {
+        if (res.confirm) {
+          // 生成随机数据
+          const point = parseFloat(generateRandomPoint());
+          const like = generateRandomLike();
+          const favorites = generateRandomFavorites();
+          const rank = getRankByPoint(point);
+          const ranking = generateRandomRanking();
+
+          // 封装表单数据
+          const formData = {
+            id: editHotel?.id || "1",
+            userId: userInfo?.id || "3",
+            status: "待审核",
+            message: {
+              id: editHotel?.message?.id || 1,
+              name: hotelName,
+              star: selectedStar,
+              point: point,
+              rank: rank,
+              like: like,
+              favorites: favorites,
+              image: hotelImage,
+              position: hotelPosition,
+              address: hotelAddress,
+              introduction: hotelIntroduction,
+              label: Labels.map(label => label.text).filter(text => text),
+              Ranking: ranking,
+              price: parseFloat(hotelPrice) || 0,
+              supplement: supplement
+            },
+            bannerList: galleryImages.map(image => ({
+              id: image.id,
+              image: image.image
+            })),
+            facilitiesList: selectedFacilities.map((facility, index) => ({
+              text: facility.text,
+              icon: facility.icon
+            })),
+            roomList: rooms.map(room => ({
+              id: room.id,
+              name: room.name,
+              price: room.price,
+              image: room.image,
+              detail: room.detail.filter(item => item),
+              introduction: room.introduction,
+              tags: room.tags.filter(tag => tag)
+            })),
+            filterTagList: [],
+            amenitiesList: FacilitiesLabels.map(label => label.text).filter(text => text),
+            serviceList: ServiceLabels.map(label => label.text).filter(text => text),
+            timePolicy: [checkInTime, checkOutTime]
+          };
+          
+          // 打印提交模式
+          console.log('Submit mode:', submitMode);
+          console.log('Form data:', formData);
+
+          // 打印封装后的数据
+          console.log('Form Data:', formData);
+
+          // 显示提交成功提示
+          Taro.showToast({
+            title: '提交成功，数据已打印到控制台',
+            icon: 'success'
+          });
+        }
+      }
+    });
+  };
+
+  // 清空表单处理函数
+  const handleClear = () => {
+    Taro.showModal({
+      title: '确认清空',
+      content: '您确定要清空所有表单数据吗？此操作不可恢复。',
+      confirmText: '确定',
+      confirmColor: '#3690f7',
+      cancelText: '取消',
+      success: (res) => {
+        if (res.confirm) {
+          // 重置所有状态
+          setHotelName('');
+          setSelectedStar(0);
+          setHotelImage('');
+          setGalleryImages([]);
+          setGalleryIdCounter(1);
+          setLabels([]);
+          setLabelsNum(0);
+          setHotelIntroduction('');
+          setHotelPrice('');
+          setHotelPosition('');
+          setHotelAddress('');
+          setCheckInTime('');
+          setCheckOutTime('');
+          setSupplement('');
+          setSelectedFacilities([]);
+          setFacilitiesLabels([]);
+          setFacilitiesLabelsNum(0);
+          setServiceLabels([]);
+          setServiceLabelsNum(0);
+          setRooms([]);
+          setRoomIdCounter(1);
+
+          Taro.showToast({
+            title: '表单已清空',
+            icon: 'success'
+          });
+        }
+      }
+    });
+  };
 
   const facilitiesList = [
     { text: "新中式风", icon: "icon-gufengwujianzhongguofenggudaishuan_huaban_huaban" },
@@ -54,8 +325,6 @@ export default function AddHotel({ activeTab }) {
     { text: "意大利餐厅", icon: "icon-fork-knife" },
     { text: "近地铁站", icon: "icon-ditiezhan" }
   ];
-
-  const [selectedFacilities, setSelectedFacilities] = useState<{text: string, icon: string}[]>([]);
 
   const handleAddLabel = () => {
     if(LabelsNum < 5){
@@ -256,12 +525,12 @@ export default function AddHotel({ activeTab }) {
         <View className='user-content-line'></View>
       </View>
       <View className='user-content-submit' style={{right:'16%'}}>
-        <View className='submit-clear submit-button'>
+        <View className='submit-clear submit-button' onClick={handleClear}>
           <View className='submit-text'>清空</View>
         </View>
       </View>
       <View className='user-content-submit'>
-        <View className='submit-button'>
+        <View className='submit-button' onClick={handleSubmit}>
           <View className='submit-text'>提交</View>
         </View>
       </View>
@@ -274,7 +543,7 @@ export default function AddHotel({ activeTab }) {
             <Text className='user-content-addhotel-message-item-title'>
               酒店名称
             </Text>
-            <Input className='input message-title' placeholder='请输入酒店名称'></Input>
+            <Input className='input message-title' placeholder='请输入酒店名称' value={hotelName} onInput={(e) => setHotelName(e.detail.value)}></Input>
           </View>
           <View className='user-content-addhotel-message-item'>
             <Text className='user-content-addhotel-message-item-title'>
@@ -319,42 +588,49 @@ export default function AddHotel({ activeTab }) {
             <Text className='user-content-addhotel-message-item-title'>
               酒店简介
             </Text>
-            <Input className='input message-introduction' placeholder='请输入简介'></Input>
+            <Input className='input message-introduction' placeholder='请输入简介' value={hotelIntroduction} onInput={(e) => setHotelIntroduction(e.detail.value)}></Input>
           </View>
           <View className='user-content-addhotel-message-item'>
             <Text className='user-content-addhotel-message-item-title'>
               起步价格
             </Text>
-            <Input className='input message-price' placeholder='请输入价格'></Input>
-          </View>
-          <View className='user-content-addhotel-message-item'>
-            <Text className='user-content-addhotel-message-item-title'>
-              酒店特色
-            </Text>
-            <Input className='input message-feature' placeholder='请输入特色'></Input>
+            <Input className='input message-price' placeholder='请输入价格' value={hotelPrice} onInput={(e) => setHotelPrice(e.detail.value)}></Input>
           </View>
           <View className='user-content-addhotel-message-item'>
             <Text className='user-content-addhotel-message-item-title'>
               酒店位置
             </Text>
-            <Input className='input message-position' placeholder='请输入位置'></Input>
+            <Input className='input message-position' placeholder='请输入位置' value={hotelPosition} onInput={(e) => setHotelPosition(e.detail.value)}></Input>
           </View>
           <View className='user-content-addhotel-message-item'>
             <Text className='user-content-addhotel-message-item-title'>
-              优惠政策
+              酒店地址
             </Text>
-            <Input className='input message-policy' placeholder='请输入优惠政策'></Input>
+            <Input className='input message-address' placeholder='请输入详细地址' value={hotelAddress} onInput={(e) => setHotelAddress(e.detail.value)}></Input>
+          </View>
+          <View className='user-content-addhotel-message-item'>
+            <Text className='user-content-addhotel-message-item-title'>
+              优惠信息
+            </Text>
+            <Input className='input message-supplement' placeholder='请输入优惠信息' value={supplement} onInput={(e) => setSupplement(e.detail.value)}></Input>
           </View>
           <View className='user-content-addhotel-message-item message-label-item' style={{justifyContent: 'flex-start',alignItems: 'flex-start'}}>
             <Text className='user-content-addhotel-message-item-title'>
               酒店标签
             </Text>
-            {Labels.map((label, index) => (
-              <Input className='input message-label' key={label.id} onInput={(e) => handleLabelInput(e, label.id)}>
-                <View className='message-label-delete' onClick={() => handleDeleteLabel(label.id)}>×</View>
-              </Input>
-            ))}
-            {LabelsNum < 5 && <View className='input message-label message-label-add' onClick={handleAddLabel}>+</View>}
+            <View className='labels-container'>
+              {Labels.map((label, index) => (
+                <View key={label.id} className='label-item'>
+                  <Input 
+                    className='input message-label' 
+                    value={label.text}
+                    onInput={(e) => handleLabelInput(e, label.id)} 
+                  />
+                  <View className='message-label-delete' onClick={() => handleDeleteLabel(label.id)}>×</View>
+                </View>
+              ))}
+              {LabelsNum < 5 && <View className='input message-label message-label-add' onClick={handleAddLabel}>+</View>}
+            </View>
           </View>
         </View>
         <View className='user-content-addhotel-banner'>
@@ -428,9 +704,14 @@ export default function AddHotel({ activeTab }) {
             </View>
             <View className='facility-labels-container'>
               {FacilitiesLabels.map((label, index) => (
-                <Input className='input facility-label' key={label.id} onInput={(e) => handleFacilityLabelInput(e, label.id)}>
+                <View key={label.id} className='label-item'>
+                  <Input 
+                    className='input facility-label' 
+                    value={label.text}
+                    onInput={(e) => handleFacilityLabelInput(e, label.id)} 
+                  />
                   <View className='facility-label-delete' onClick={() => handleDeleteFacilityLabel(label.id)}>×</View>
-                </Input>
+                </View>
               ))}
               {FacilitiesLabelsNum < 7 && <View className='input facility-label facility-label-add' onClick={handleAddFacilityLabel}>+</View>}
             </View>
@@ -443,9 +724,14 @@ export default function AddHotel({ activeTab }) {
             </View>
             <View className='service-labels-container'>
               {ServiceLabels.map((label, index) => (
-                <Input className='input service-label' key={label.id} onInput={(e) => handleServiceLabelInput(e, label.id)}>
+                <View key={label.id} className='label-item'>
+                  <Input 
+                    className='input service-label' 
+                    value={label.text}
+                    onInput={(e) => handleServiceLabelInput(e, label.id)} 
+                  />
                   <View className='service-label-delete' onClick={() => handleDeleteServiceLabel(label.id)}>×</View>
-                </Input>
+                </View>
               ))}
               {ServiceLabelsNum < 5 && <View className='input service-label service-label-add' onClick={handleAddServiceLabel}>+</View>}
             </View>
@@ -454,13 +740,13 @@ export default function AddHotel({ activeTab }) {
             <View className='service-labels-title'>
               最早入住时间
             </View>
-            <Input className='service-time-input input' placeholder='格式为hh-mm' />
+            <Input className='service-time-input input' placeholder='格式为hh-mm' value={checkInTime} onInput={(e) => setCheckInTime(e.detail.value)} />
           </View>
           <View className='service-time'>
             <View className='service-labels-title'>
               最晚退房时间
             </View>
-            <Input className='service-time-input input' placeholder='格式为hh-mm' />
+            <Input className='service-time-input input' placeholder='格式为hh-mm' value={checkOutTime} onInput={(e) => setCheckOutTime(e.detail.value)} />
           </View>
         </View>
         <View className='user-content-addhotel-roomList'>

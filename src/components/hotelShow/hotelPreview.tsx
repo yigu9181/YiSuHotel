@@ -291,7 +291,7 @@ export default function HotelPreview({ hotelData, isActive, onRoomClick, onHotel
         </View>
 
         <View className='preview-hotel-room'>
-          {hotel.roomList?.slice(0, 2).map((room) => (
+          {hotel.roomList?.map((room) => (
             <View className='preview-room-item' key={room.id} onClick={() => handleShowRoomDetail(room)}>
               <View className='preview-room-image'>
                 <Image className='preview-room-the-image' src={room.image} />
