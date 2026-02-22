@@ -28,7 +28,24 @@ export default function Index () {
     }
   }, [])
   const [activeTab, setActiveTab] = useState(true)
-
+   const handleLogout = () => {
+      Taro.showModal({
+        title: '确认退出',
+        content: '您确定要退出登录吗？',
+        confirmText: '退出',
+        confirmColor: '#3690f7',
+        success: (res) => {
+          if (res.confirm) {
+            // 清除token
+            Taro.removeStorageSync('token');
+            // 跳转到登录页
+            Taro.navigateTo({
+              url: '/pages/h5-login/index'
+            });
+          }
+        }
+      });
+    };
  return(
    <View className='user-page'>
       <View className='user-nav-tab'>
@@ -45,7 +62,7 @@ export default function Index () {
           编辑酒店
         </View>
        <View className='user-nav-tab-text name'><Text className='iconfont icon-yonghu icon'></Text>用户名：hhhc123</View>
-       <View className='user-nav-tab-text logout'>退出</View>
+       <View className='user-nav-tab-text logout' onClick={handleLogout}>退出</View>
       </View>
       <MyHotel activeTab={activeTab} />
       <AddHotel activeTab={activeTab} />
