@@ -1,0 +1,79 @@
+.user-page {
+  width: 100vw;
+  height: 100vh;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  background: url('https://bd-s.tripcdn.cn/NFES/H5login/1769572081911/_next/serverStatic/images/pc_login_bg.png');
+  background-size: cover;
+  background-position: center;
+  .user-nav-tab {
+    z-index: 100;
+    width: 100%;
+    height: 5%;
+    display: flex;
+    align-items: center;
+    position: absolute;
+    left: 0%;
+    background: linear-gradient(135deg, #85b3e8 0%, #206fca 100%);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.6);
+    .user-nav-tab-text {
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 30px;
+      font-weight: 600;
+      color: #fff;
+    }
+    .my-hotel {
+      width: 12%;
+      position: absolute;
+      left: 3%;
+      top: 50%;
+      transform: translate(0, -50%);
+      letter-spacing: 5px;
+      text-indent: 7.5px;
+      cursor: pointer;
+      &:active {
+        scale: 0.98;
+      }
+    }
+    .active{
+      background: #2a6ebc;
+      box-shadow:
+          2px 0 2px  rgba(0, 0, 0, 0.3),
+          -2px 0 2px  rgba(0, 0, 0, 0.3);
+    }
+    .icon {
+      font-size: 25px;
+      color:#ffffff;
+      transform: translate(0, 2%);
+    }
+    .name {
+      width: 14%;
+      position: absolute;
+      right: 6cqmax;
+      top: 50%;
+      font-size: 20px;
+      font-weight: 500;
+      transform: translate(0, -50%);
+      .icon{
+        font-size: 20px;
+        margin-right: 10px;
+        transform: translate(0, 5%);
+      }
+    }
+    .logout{
+      position: absolute;
+      width: 5%;
+      right: 1%;
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      &:active {
+        scale: 0.98;
+      }
+    }
+  }
+}
