@@ -303,7 +303,6 @@
             top: 7%;
             font-size: 12px;
             color: #fff;
-            background-color: green;
             font-weight: 500;
             display: flex;
             flex-direction: column;
@@ -311,6 +310,18 @@
             align-items: start;
             padding: 2px 10px;
             border-radius: 15px;
+          }
+          .hotel-state.status-pending {
+            background-color: #ffcf24;
+          }
+          .hotel-state.status-approved {
+            background-color: green;
+          }
+          .hotel-state.status-rejected {
+            background-color: #ff5900;
+          }
+          .hotel-state.status-offline {
+            background-color: #999;
           }
         }
       }

@@ -68,35 +68,50 @@ export default function Index () {
     Taro.showModal({
       title: '确认删除',
       content: '您确定要删除这家酒店吗？此操作不可恢复。',
-      confirmText: '确定删除',
+      confirmText: '确定',
       confirmColor: '#ff4d4f',
       cancelText: '取消',
       success: (res) => {
         if (res.confirm) {
-          // 要求用户输入账户密码
+          // 二次确认
           Taro.showModal({
-            title: '验证身份',
-            content: '请输入您的账户密码以确认删除操作。',
-            editable: true,
-            placeholderText: '请输入密码',
-            success: (passRes) => {
-              if (passRes.confirm && passRes.content === userInfo?.password) {
-                // 密码正确，执行删除操作
+            title: '再次确认',
+            content: '请再次确认是否要删除这家酒店？',
+            confirmText: '确认删除',
+            confirmColor: '#ff4d4f',
+            cancelText: '取消',
+            success: async (secondRes) => {
+              if (secondRes.confirm) {
+                // 执行删除操作
                 console.log('删除酒店:', hotel.id);
-                // 这里应该调用API删除酒店
-                // 模拟删除成功
-                Taro.showToast({
-                  title: '删除成功',
-                  icon: 'success'
-                });
-                // 重新获取酒店列表
-                // 这里应该刷新酒店列表
-              } else {
-                // 密码错误
-                Taro.showToast({
-                  title: '密码错误，删除失败',
-                  icon: 'none'
-                });
+                try {
+                  // 调用API删除酒店
+                  const response = await Taro.request({
+                    url: `http://localhost:3000/hotels/${hotel.id}`,
+                    method: 'DELETE'
+                  });
+
+                  if (response.statusCode === 200 || response.statusCode === 204) {
+                    // 删除成功
+                    Taro.showToast({
+                      title: '删除成功',
+                      icon: 'success'
+                    });
+
+                    // 重新获取酒店列表
+                    // 由于 MyHotel 组件在 userInfo 变化时会重新获取酒店列表
+                    // 我们可以通过重新设置 userInfo 来触发刷新
+                    setUserInfo({...userInfo});
+                  } else {
+                    throw new Error('删除失败');
+                  }
+                } catch (error) {
+                  console.error('删除操作失败:', error);
+                  Taro.showToast({
+                    title: '删除失败',
+                    icon: 'none'
+                  });
+                }
               }
             }
           });

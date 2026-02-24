@@ -183,14 +183,14 @@ export default function AddHotel({ activeTab, userInfo, editHotel, submitMode = 
   };
 
   // 提交表单处理函数
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     Taro.showModal({
       title: '确认提交',
-      content: '您确定要提交表单吗？提交后数据将打印到控制台。',
+      content: '您确定要提交表单吗？提交后数据将保存到数据库。',
       confirmText: '确定',
       confirmColor: '#3690f7',
       cancelText: '取消',
-      success: (res) => {
+      success: async (res) => {
         if (res.confirm) {
           // 生成随机数据
           const point = parseFloat(generateRandomPoint());
@@ -199,13 +199,46 @@ export default function AddHotel({ activeTab, userInfo, editHotel, submitMode = 
           const rank = getRankByPoint(point);
           const ranking = generateRandomRanking();
 
+          // 生成新酒店的 ID
+          let newHotelId = editHotel?.id;
+          let newMessageId = editHotel?.message?.id;
+
+          if (!editHotel) {
+            // 新酒店，获取未被分配的 ID
+            try {
+              const response = await Taro.request({
+                url: 'http://localhost:3000/hotels',
+                method: 'GET'
+              });
+
+              if (response.statusCode === 200) {
+                const hotels = response.data;
+                // 计算最大 ID
+                const maxId = hotels.reduce((max, hotel) => Math.max(max, parseInt(hotel.id)), 0);
+                newHotelId = (maxId + 1).toString();
+                // 计算最大 message ID
+                const maxMessageId = hotels.reduce((max, hotel) => Math.max(max, hotel.message?.id || 0), 0);
+                newMessageId = maxMessageId + 1;
+              } else {
+                // 如果获取失败，使用默认值
+                newHotelId = "1";
+                newMessageId = 1;
+              }
+            } catch (error) {
+              console.error('获取酒店列表失败:', error);
+              // 出错时使用默认值
+              newHotelId = "1";
+              newMessageId = 1;
+            }
+          }
+
           // 封装表单数据
           const formData = {
-            id: editHotel?.id || "1",
+            id: newHotelId,
             userId: userInfo?.id || "3",
             status: "待审核",
             message: {
-              id: editHotel?.message?.id || 1,
+              id: newMessageId,
               name: hotelName,
               star: selectedStar,
               point: point,
@@ -238,24 +271,50 @@ export default function AddHotel({ activeTab, userInfo, editHotel, submitMode = 
               introduction: room.introduction,
               tags: room.tags.filter(tag => tag)
             })),
-            filterTagList: [],
+            filterTagList: ServiceLabels.map(label => label.text).filter(text => text),
             amenitiesList: FacilitiesLabels.map(label => label.text).filter(text => text),
-            serviceList: ServiceLabels.map(label => label.text).filter(text => text),
             timePolicy: [checkInTime, checkOutTime]
           };
-          
+
           // 打印提交模式
           console.log('Submit mode:', submitMode);
           console.log('Form data:', formData);
 
-          // 打印封装后的数据
-          console.log('Form Data:', formData);
+          try {
+            let response;
+            if (submitMode === 'update' && editHotel) {
+              // 更新现有酒店
+              response = await Taro.request({
+                url: `http://localhost:3000/hotels/${editHotel.id}`,
+                method: 'PUT',
+                data: formData
+              });
+            } else {
+              // 创建新酒店
+              response = await Taro.request({
+                url: 'http://localhost:3000/hotels',
+                method: 'POST',
+                data: formData
+              });
+            }
 
-          // 显示提交成功提示
-          Taro.showToast({
-            title: '提交成功，数据已打印到控制台',
-            icon: 'success'
-          });
+            if (response.statusCode === 200 || response.statusCode === 201) {
+              // 提交成功
+              console.log('提交成功:', response.data);
+              Taro.showToast({
+                title: '提交成功，数据已保存到数据库',
+                icon: 'success'
+              });
+            } else {
+              throw new Error('提交失败');
+            }
+          } catch (error) {
+            console.error('提交操作失败:', error);
+            Taro.showToast({
+              title: '提交失败',
+              icon: 'none'
+            });
+          }
         }
       }
     });
@@ -304,6 +363,7 @@ export default function AddHotel({ activeTab, userInfo, editHotel, submitMode = 
   };
 
   const facilitiesList = [
+    { text: "网红酒店", icon: "icon-jiudian" },
     { text: "新中式风", icon: "icon-gufengwujianzhongguofenggudaishuan_huaban_huaban" },
     { text: "免费停车", icon: "icon-tingche" },
     { text: "一线江景", icon: "icon-Golden-GateBridge" },
@@ -314,7 +374,6 @@ export default function AddHotel({ activeTab, userInfo, editHotel, submitMode = 
     { text: "行政酒廊", icon: "icon-hangzhengjiulang" },
     { text: "历史名宅", icon: "icon-homestay" },
     { text: "爵士乐团", icon: "icon-jueshile" },
-    { text: "露台江景", icon: "icon-Golden-GateBridge" },
     { text: "SPA水疗", icon: "icon-anmo" },
     { text: "高空景观", icon: "icon-w_fengjing" },
     { text: "无边泳池", icon: "icon-youyongchi" },
@@ -621,10 +680,10 @@ export default function AddHotel({ activeTab, userInfo, editHotel, submitMode = 
             <View className='labels-container'>
               {Labels.map((label, index) => (
                 <View key={label.id} className='label-item'>
-                  <Input 
-                    className='input message-label' 
+                  <Input
+                    className='input message-label'
                     value={label.text}
-                    onInput={(e) => handleLabelInput(e, label.id)} 
+                    onInput={(e) => handleLabelInput(e, label.id)}
                   />
                   <View className='message-label-delete' onClick={() => handleDeleteLabel(label.id)}>×</View>
                 </View>
@@ -705,10 +764,10 @@ export default function AddHotel({ activeTab, userInfo, editHotel, submitMode = 
             <View className='facility-labels-container'>
               {FacilitiesLabels.map((label, index) => (
                 <View key={label.id} className='label-item'>
-                  <Input 
-                    className='input facility-label' 
+                  <Input
+                    className='input facility-label'
                     value={label.text}
-                    onInput={(e) => handleFacilityLabelInput(e, label.id)} 
+                    onInput={(e) => handleFacilityLabelInput(e, label.id)}
                   />
                   <View className='facility-label-delete' onClick={() => handleDeleteFacilityLabel(label.id)}>×</View>
                 </View>
@@ -725,10 +784,10 @@ export default function AddHotel({ activeTab, userInfo, editHotel, submitMode = 
             <View className='service-labels-container'>
               {ServiceLabels.map((label, index) => (
                 <View key={label.id} className='label-item'>
-                  <Input 
-                    className='input service-label' 
+                  <Input
+                    className='input service-label'
                     value={label.text}
-                    onInput={(e) => handleServiceLabelInput(e, label.id)} 
+                    onInput={(e) => handleServiceLabelInput(e, label.id)}
                   />
                   <View className='service-label-delete' onClick={() => handleDeleteServiceLabel(label.id)}>×</View>
                 </View>

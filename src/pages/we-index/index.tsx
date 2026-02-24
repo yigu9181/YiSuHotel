@@ -1,11 +1,11 @@
 import { View, Text, Swiper, SwiperItem, Image } from '@tarojs/components'
 import { useSelector, useDispatch } from 'react-redux'
-import { useLoad } from '@tarojs/taro'
+import Taro, { useLoad } from '@tarojs/taro'
 import { getDateDescription, getMouth, getDay, getWeek, getDaysBetween } from '@/utils/calendar'
 import React,{ useState ,useEffect} from 'react'
 import { setHotelLabel } from '@/store/label/hotelLabel'
 import { setChooseHotel } from '@/store/hotel/chooseHotel'
-import { changeDate, toDetailPage, toListPage, choosePositon } from '@/utils/navigate'
+import { changeDate, toDetailPage,  choosePositon } from '@/utils/navigate'
 import './index.scss'
 
 
@@ -60,6 +60,35 @@ export default function Index() {
 
   // 选中的标签
   const [selectedTags, setSelectedTags] = useState<string[]>(Labels || [])
+  const toListPage = (): void => {
+    if ((!selectedAddress) && (!startDate || !endDate)) {
+      Taro.showToast({
+        title: '请选择入住时间和位置',
+        icon: 'none',
+        duration: 2000
+      })
+      return
+    }
+    if (!selectedAddress) {
+      Taro.showToast({
+        title: '请选择位置',
+        icon: 'none',
+        duration: 2000
+      })
+      return
+    }
+    if (!startDate || !endDate) {
+      Taro.showToast({
+        title: '请选择入住时间',
+        icon: 'none',
+        duration: 2000
+      })
+      return
+    }
+    Taro.navigateTo({
+      url: '/pages/we-list/index'
+    })
+  }
 
   useEffect(() => {
     dispatch(setHotelLabel({

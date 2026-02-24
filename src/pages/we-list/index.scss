@@ -4,10 +4,12 @@
   position: relative;
   left: 50%;
   transform: translateX(-50%);
+  overflow: hidden;
 
   .tab {
     top: 0.5%;
     display: flex;
+    height: 5vh;
     position: relative;
     width: 95%;
     height: 100px;
@@ -137,6 +139,7 @@
   }
 
   .filter-box {
+    height: 4vh;
     position: relative;
     width: 95%;
     top: 0.5%;
@@ -169,7 +172,7 @@
         padding: 10px;
         height: 40px;
         line-height: 40px;
-        font-size: 30px;
+        font-size: 25px;
         font-weight: 400;
         border-radius: 10px;
       }
@@ -187,7 +190,7 @@
     justify-content: start;
     top: 1.5%;
     width: 95%;
-    height: 5%;
+    height: 4vh;
     margin: 0;
     font-size: 0;
     transition: all 0.3s ease-in-out;
@@ -251,7 +254,7 @@
   .hotel {
     display: flex;
     width: 100%;
-    height: 90%;
+    height: 85vh;
     overflow-y: scroll;
     flex-direction: column;
     margin-top: 10px;

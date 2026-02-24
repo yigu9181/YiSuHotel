@@ -28,6 +28,7 @@ interface Hotel {
   id: string;
   userId: string;
   status: string;
+  rejectReason?: string;
   message: HotelMessage;
   bannerList: any[];
   facilitiesList: any[];
@@ -69,14 +70,6 @@ export default function MyHotel({ activeTab, userInfo, onHotelSelect, selectedHo
   const fetchUserHotels = async (userId: string) => {
     setLoading(true);
     try {
-      // 这里应该调用真实的API，现在使用模拟数据
-      // const response = await Taro.request({
-      //   url: `/api/hotel/user/${userId}`,
-      //   method: 'GET'
-      // });
-      // setHotels(response.data.data.list);
-
-      // 模拟API请求
       const response = await Taro.request({
         url: 'http://localhost:3000/hotels',
         method: 'GET'
@@ -120,6 +113,52 @@ export default function MyHotel({ activeTab, userInfo, onHotelSelect, selectedHo
     e.stopPropagation();
     if (onDeleteHotel) {
       onDeleteHotel(hotel);
+    }
+  };
+
+  // 处理查看不通过理由
+  const handleViewRejectReason = (e: React.MouseEvent, hotel: Hotel) => {
+    e.stopPropagation();
+    if (hotel.rejectReason) {
+      Taro.showModal({
+        title: '不通过原因',
+        content: hotel.rejectReason,
+        confirmColor: '#3690f7',
+        confirmText: '确定',
+        cancelText: '取消'
+      });
+    }
+  };
+
+  // 获取状态文本
+  const getStatusText = (status: string) => {
+    switch (status) {
+      case '待审核':
+        return '待审核';
+      case '已发布':
+        return '已发布';
+      case '未通过':
+        return '未通过';
+      case '已下线':
+        return '已下线';
+      default:
+        return status;
+    }
+  };
+
+  // 获取状态样式
+  const getStatusClass = (status: string) => {
+    switch (status) {
+      case '待审核':
+        return 'status-pending';
+      case '已发布':
+        return 'status-approved';
+      case '未通过':
+        return 'status-rejected';
+      case '已下线':
+        return 'status-offline';
+      default:
+        return '';
     }
   };
 
@@ -185,13 +224,19 @@ export default function MyHotel({ activeTab, userInfo, onHotelSelect, selectedHo
                       <text className='iconfont icon-bianji icon'></text>
                       &nbsp;&nbsp;编辑
                     </View>
+                    {hotel.status === '未通过' && (
+                      <View className='hotel-operation-item' onClick={(e) => handleViewRejectReason(e, hotel)} style={{ color: '#ff5900' }}>
+                        <text className='iconfont icon-yuanyin icon' ></text>
+                        &nbsp;&nbsp;原因
+                      </View>
+                    )}
                     <View className='hotel-operation-item' onClick={(e) => handleDeleteHotel(e, hotel)}>
                       <text className='iconfont icon-shanchu icon'></text>
                       &nbsp;&nbsp;删除
                     </View>
                   </View>
-                  <View className='hotel-state'>
-                    已发布
+                  <View className={`hotel-state ${getStatusClass(hotel.status)}`}>
+                    {getStatusText(hotel.status)}
                   </View>
                 </View>
               </View>

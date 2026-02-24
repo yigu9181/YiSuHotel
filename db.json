@@ -23,7 +23,7 @@
     {
       "id": "1",
       "userId": "3",
-      "status": "已下线",
+      "status": "已发布",
       "rejectReason": "",
       "message": {
         "id": 1,
@@ -63,7 +63,7 @@
       ],
       "facilitiesList": [
         {
-          "text": "2020年开业",
+          "text": "网红酒店",
           "icon": "icon-jiudian"
         },
         {
@@ -163,8 +163,8 @@
     {
       "id": "2",
       "userId": "3",
-      "status": "未通过",
-      "rejectReason": "酒店信息不完整，缺少必要的设施描述和房间详情。",
+      "status": "已发布",
+      "rejectReason": "",
       "message": {
         "id": 2,
         "name": "上海外滩W酒店",
@@ -203,7 +203,7 @@
       ],
       "facilitiesList": [
         {
-          "text": "2017年开业",
+          "text": "网红酒店",
           "icon": "icon-jiudian"
         },
         {
@@ -302,7 +302,7 @@
     {
       "id": "3",
       "userId": "3",
-      "status": "待审核",
+      "status": "已发布",
       "rejectReason": "",
       "message": {
         "id": 3,
@@ -342,7 +342,7 @@
       ],
       "facilitiesList": [
         {
-          "text": "1929年开业",
+          "text": "网红酒店",
           "icon": "icon-jiudian"
         },
         {
@@ -354,7 +354,7 @@
           "icon": "icon-jueshile"
         },
         {
-          "text": "露台江景",
+          "text": "一线江景",
           "icon": "icon-Golden-GateBridge"
         },
         {
@@ -481,7 +481,7 @@
       ],
       "facilitiesList": [
         {
-          "text": "2008年开业",
+          "text": "网红酒店",
           "icon": "icon-jiudian"
         },
         {
@@ -620,7 +620,7 @@
       ],
       "facilitiesList": [
         {
-          "text": "2018年开业",
+          "text": "网红酒店",
           "icon": "icon-jiudian"
         },
         {
@@ -713,6 +713,1092 @@
       ],
       "timePolicy": [
         "14:00",
+        "12:00"
+      ]
+    },
+    {
+      "id": "6",
+      "userId": "3",
+      "status": "已发布",
+      "rejectReason": "",
+      "message": {
+        "id": 6,
+        "name": "上海璞丽酒店",
+        "star": 5,
+        "point": 4.8,
+        "rank": "超棒",
+        "like": 2156,
+        "favorites": "3.2万收藏",
+        "image": "https://www.shzdsj.com/Upload/others/20120713113312.jpg",
+        "position": "静安寺 · 南京西路",
+        "address": "静安区常德路1号",
+        "introduction": "都会桃源 · 新中式禅意空间",
+        "label": [
+          "新中式风",
+          "SPA水疗",
+          "米其林餐厅",
+          "静谧花园",
+          "设计感"
+        ],
+        "Ranking": "上海奢华酒店榜 No.5",
+        "price": 1688,
+        "supplement": "住3付2 行政礼遇 3项权益"
+      },
+      "bannerList": [
+        {
+          "id": 1,
+          "image": "https://www.shzdsj.com/Upload/others/20120713113312.jpg"
+        },
+        {
+          "id": 2,
+          "image": "https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=800"
+        },
+        {
+          "id": 3,
+          "image": "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800"
+        }
+      ],
+      "facilitiesList": [
+        {
+          "text": "江景下用餐",
+          "icon": "icon-a-godutch"
+        },
+        {
+          "text": "米其林餐厅",
+          "icon": "icon-fork-knife"
+        },
+        {
+          "text": "SPA水疗",
+          "icon": "icon-anmo"
+        },
+        {
+          "text": "设计感",
+          "icon": "icon-sheji"
+        },
+        {
+          "text": "网红打卡",
+          "icon": "icon-wanghongdakadian"
+        }
+      ],
+      "roomList": [
+        {
+          "id": 1,
+          "name": "经典客房",
+          "price": 1688,
+          "image": "https://images.unsplash.com/photo-1590490360182-c33d57733427?w=800",
+          "detail": [
+            "1张1.8米大床",
+            "45㎡",
+            "2人入住",
+            "3-8层"
+          ],
+          "introduction": "璞丽标志性竹纹屏风，禅意空间设计，配备独立浴缸。",
+          "tags": [
+            "免费取消",
+            "含早餐",
+            "立即确认"
+          ]
+        },
+        {
+          "id": 2,
+          "name": "豪华套房",
+          "price": 2888,
+          "image": "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800",
+          "detail": [
+            "1张2.0米特大床",
+            "80㎡",
+            "2人入住",
+            "9-15层"
+          ],
+          "introduction": "独立客厅与卧室，私人花园景观，尊享米其林早餐。",
+          "tags": [
+            "免费取消",
+            "含早餐",
+            "立即确认"
+          ]
+        }
+      ],
+      "filterTagList": [
+        "免费取消",
+        "含早餐",
+        "套房",
+        "立即确认"
+      ],
+      "amenitiesList": [
+        "吹风机",
+        "空调",
+        "智能电视",
+        "保险箱",
+        "高端洗护用品",
+        "迷你吧",
+        "蓝牙音箱",
+        "胶囊咖啡机"
+      ],
+      "timePolicy": [
+        "14:00",
+        "12:00"
+      ]
+    },
+    {
+      "id": "7",
+      "userId": "3",
+      "status": "已发布",
+      "rejectReason": "",
+      "message": {
+        "id": 7,
+        "name": "上海艾迪逊酒店",
+        "star": 5,
+        "point": 4.7,
+        "rank": "超棒",
+        "like": 3421,
+        "favorites": "4.5万收藏",
+        "image": "https://ts2.tc.mm.bing.net/th/id/OIP-C.RIof8ZaAk6Rnfony-8z7fgHaFj?rs=1&pid=ImgDetMain&o=7&rm=3",
+        "position": "外滩 · 南京东路",
+        "address": "黄浦区南京东路199号",
+        "introduction": "历史建筑重生 · 现代奢华体验",
+        "label": [
+          "历史名宅",
+          "网红打卡",
+          "设计感",
+          "高空景观",
+          "近地铁站"
+        ],
+        "Ranking": "上海设计酒店榜 No.2",
+        "price": 1888,
+        "supplement": "提前预订9折 双人下午茶 2项权益"
+      },
+      "bannerList": [
+        {
+          "id": 1,
+          "image": "https://ts2.tc.mm.bing.net/th/id/OIP-C.RIof8ZaAk6Rnfony-8z7fgHaFj?rs=1&pid=ImgDetMain&o=7&rm=3"
+        },
+        {
+          "id": 2,
+          "image": "https://images.unsplash.com/photo-1566665797739-1674de7a421a?w=800"
+        },
+        {
+          "id": 3,
+          "image": "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?w=800"
+        }
+      ],
+      "facilitiesList": [
+        {
+          "text": "一线江景",
+          "icon": "icon-Golden-GateBridge"
+        },
+        {
+          "text": "爵士乐团",
+          "icon": "icon-jueshile"
+        },
+        {
+          "text": "行政酒廊",
+          "icon": "icon-hangzhengjiulang"
+        },
+        {
+          "text": "SPA水疗",
+          "icon": "icon-anmo"
+        },
+        {
+          "text": "管家服务",
+          "icon": "icon-guanjia"
+        }
+      ],
+      "roomList": [
+        {
+          "id": 1,
+          "name": "豪华客房",
+          "price": 1888,
+          "image": "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800",
+          "detail": [
+            "1张1.8米大床",
+            "42㎡",
+            "2人入住",
+            "5-15层"
+          ],
+          "introduction": "艾迪逊标志性绒毯墙面，定制Le Labo洗护，城市天际线景观。",
+          "tags": [
+            "免费取消",
+            "含早餐",
+            "立即确认"
+          ]
+        },
+        {
+          "id": 2,
+          "name": "外滩景观客房",
+          "price": 2288,
+          "image": "https://images.unsplash.com/photo-1591088398332-8a7791972843?w=800",
+          "detail": [
+            "1张1.8米大床",
+            "45㎡",
+            "2人入住",
+            "16-25层"
+          ],
+          "introduction": "直面外滩历史建筑群，全景落地窗，复古与现代完美融合。",
+          "tags": [
+            "免费取消",
+            "含早餐",
+            "立即确认"
+          ]
+        }
+      ],
+      "filterTagList": [
+        "免费取消",
+        "含早餐",
+        "景观房",
+        "立即确认"
+      ],
+      "amenitiesList": [
+        "吹风机",
+        "空调",
+        "智能电视",
+        "保险箱",
+        "Le Labo洗护",
+        "迷你吧",
+        "蓝牙音箱"
+      ],
+      "timePolicy": [
+        "15:00",
+        "12:00"
+      ]
+    },
+    {
+      "id": "8",
+      "userId": "3",
+      "status": "已发布",
+      "rejectReason": "",
+      "message": {
+        "id": 8,
+        "name": "上海宝格丽酒店",
+        "star": 4,
+        "point": 4.9,
+        "rank": "超棒",
+        "like": 4521,
+        "favorites": "6.8万收藏",
+        "image": "https://ts1.tc.mm.bing.net/th/id/R-C.f3cdf09f574a94854c8a8e786fc51103?rik=z8ugMru1lT9YRg&riu=http%3a%2f%2fimg.luxtarget.com%2fcms%2fwww%2f201806%2f21145813mvjd.jpg&ehk=1BZuUX5x1gD97AxTuJzXkMEQ6e8BQAdskHYoGt24Sbo%3d&risl=&pid=ImgRaw&r=0",
+        "position": "苏河湾 · 河南北路",
+        "address": "静安区河南北路33号",
+        "introduction": "意式优雅 · 城市度假胜地",
+        "label": [
+          "意大利餐厅",
+          "米其林餐厅",
+          "SPA水疗",
+          "高空景观",
+          "管家服务"
+        ],
+        "Ranking": "上海奢华酒店榜 No.1",
+        "price": 2888,
+        "supplement": "住4付3 宝格丽专属礼遇 4项权益"
+      },
+      "bannerList": [
+        {
+          "id": 1,
+          "image": "https://ts1.tc.mm.bing.net/th/id/R-C.f3cdf09f574a94854c8a8e786fc51103?rik=z8ugMru1lT9YRg&riu=http%3a%2f%2fimg.luxtarget.com%2fcms%2fwww%2f201806%2f21145813mvjd.jpg&ehk=1BZuUX5x1gD97AxTuJzXkMEQ6e8BQAdskHYoGt24Sbo%3d&risl=&pid=ImgRaw&r=0"
+        },
+        {
+          "id": 2,
+          "image": "https://images.unsplash.com/photo-1582719508461-905c673771fd?w=800"
+        },
+        {
+          "id": 3,
+          "image": "https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=800"
+        }
+      ],
+      "facilitiesList": [
+        {
+          "text": "免费停车",
+          "icon": "icon-tingche"
+        },
+        {
+          "text": "高空景观",
+          "icon": "icon-w_fengjing"
+        },
+        {
+          "text": "江景下用餐",
+          "icon": "icon-a-godutch"
+        },
+        {
+          "text": "设计感",
+          "icon": "icon-sheji"
+        },
+        {
+          "text": "SPA水疗",
+          "icon": "icon-anmo"
+        }
+      ],
+      "roomList": [
+        {
+          "id": 1,
+          "name": "高级城市景观房",
+          "price": 2888,
+          "image": "https://images.unsplash.com/photo-1590490360182-c33d57733427?w=800",
+          "detail": [
+            "1张2.0米特大床",
+            "52㎡",
+            "2人入住",
+            "5-20层"
+          ],
+          "introduction": "宝格丽定制家具，意大利大理石浴室，专属管家服务。",
+          "tags": [
+            "免费取消",
+            "含早餐",
+            "立即确认"
+          ]
+        },
+        {
+          "id": 2,
+          "name": "豪华外滩景观套房",
+          "price": 5888,
+          "image": "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800",
+          "detail": [
+            "1张2.0米特大床",
+            "120㎡",
+            "2人入住",
+            "21-30层"
+          ],
+          "introduction": "270度外滩全景，独立起居空间，私人酒吧，尊享米其林晚餐。",
+          "tags": [
+            "免费取消",
+            "含早餐",
+            "立即确认"
+          ]
+        }
+      ],
+      "filterTagList": [
+        "免费取消",
+        "含早餐",
+        "套房",
+        "立即确认"
+      ],
+      "amenitiesList": [
+        "吹风机",
+        "空调",
+        "智能电视",
+        "保险箱",
+        "宝格丽洗护",
+        "迷你吧",
+        "蓝牙音箱",
+        "意式咖啡机"
+      ],
+      "timePolicy": [
+        "15:00",
+        "12:00"
+      ]
+    },
+    {
+      "id": "9",
+      "userId": "3",
+      "status": "已发布",
+      "rejectReason": "",
+      "message": {
+        "id": 9,
+        "name": "上海半岛酒店",
+        "star": 5,
+        "point": 4.8,
+        "rank": "超棒",
+        "like": 2890,
+        "favorites": "4.1万收藏",
+        "image": "https://ts1.tc.mm.bing.net/th/id/R-C.fa195d28c70cad82c1bc23b9e1a2f0cb?rik=WB52FOmHnwKrDg&riu=http%3a%2f%2f5b0988e595225.cdn.sohucs.com%2fimages%2f20191226%2f6c586b1a39b1489e994d72835c7a4668.JPG&ehk=YLAyabpNcZ8qlmGmKu6UVABqw55Sqj0etQYzEolsBZ4%3d&risl=&pid=ImgRaw&r=0",
+        "position": "外滩 · 中山东一路",
+        "address": "黄浦区中山东一路32号",
+        "introduction": "经典传奇 · 外滩永恒地标",
+        "label": [
+          "一线江景",
+          "米其林餐厅",
+          "爵士乐团",
+          "历史名宅",
+          "管家服务"
+        ],
+        "Ranking": "上海奢华酒店榜 No.4",
+        "price": 2188,
+        "supplement": "提前预订85折 半岛下午茶 3项权益"
+      },
+      "bannerList": [
+        {
+          "id": 1,
+          "image": "https://ts1.tc.mm.bing.net/th/id/R-C.fa195d28c70cad82c1bc23b9e1a2f0cb?rik=WB52FOmHnwKrDg&riu=http%3a%2f%2f5b0988e595225.cdn.sohucs.com%2fimages%2f20191226%2f6c586b1a39b1489e994d72835c7a4668.JPG&ehk=YLAyabpNcZ8qlmGmKu6UVABqw55Sqj0etQYzEolsBZ4%3d&risl=&pid=ImgRaw&r=0"
+        },
+        {
+          "id": 2,
+          "image": "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=800"
+        },
+        {
+          "id": 3,
+          "image": "https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=800"
+        }
+      ],
+      "facilitiesList": [
+        {
+          "text": "江景下用餐",
+          "icon": "icon-a-godutch"
+        },
+        {
+          "text": "设计感",
+          "icon": "icon-sheji"
+        },
+        {
+          "text": "爵士乐团",
+          "icon": "icon-jueshile"
+        },
+        {
+          "text": "免费停车",
+          "icon": "icon-tingche"
+        },
+        {
+          "text": "无边泳池",
+          "icon": "icon-youyongchi"
+        }
+      ],
+      "roomList": [
+        {
+          "id": 1,
+          "name": "豪华园景客房",
+          "price": 2188,
+          "image": "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800",
+          "detail": [
+            "1张1.8米大床",
+            "45㎡",
+            "2人入住",
+            "3-10层"
+          ],
+          "introduction": "Art Deco装饰风格，独立化妆间，配备半岛专属护肤品。",
+          "tags": [
+            "免费取消",
+            "含早餐",
+            "立即确认"
+          ]
+        },
+        {
+          "id": 2,
+          "name": "特级江景套房",
+          "price": 3888,
+          "image": "https://images.unsplash.com/photo-1591088398332-8a7791972843?w=800",
+          "detail": [
+            "1张2.0米特大床",
+            "95㎡",
+            "2人入住",
+            "11-20层"
+          ],
+          "introduction": "全景落地窗俯瞰黄浦江，独立客厅，专属管家，劳斯莱斯接送。",
+          "tags": [
+            "免费取消",
+            "含早餐",
+            "立即确认"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "10",
+      "userId": "3",
+      "status": "已发布",
+      "rejectReason": "",
+      "message": {
+        "id": 10,
+        "name": "上海养云安缦",
+        "star": 5,
+        "point": 4.9,
+        "rank": "超棒",
+        "like": 1856,
+        "favorites": "2.9万收藏",
+        "image": "https://ts3.tc.mm.bing.net/th/id/OIP-C.KwhLeHEwVuV8G6Pn8Q3FoAHaE7?rs=1&pid=ImgDetMain&o=7&rm=3",
+        "position": "闵行 · 马桥",
+        "address": "闵行区元江路6161号",
+        "introduction": "古宅新生 · 隐逸于都市的世外桃源",
+        "label": [
+          "历史名宅",
+          "新中式风",
+          "静谧花园",
+          "SPA水疗",
+          "设计感"
+        ],
+        "Ranking": "上海度假酒店榜 No.1",
+        "price": 3888,
+        "supplement": "含双人晚餐 古宅导览 3项权益"
+      },
+      "bannerList": [
+        {
+          "id": 1,
+          "image": "https://ts3.tc.mm.bing.net/th/id/OIP-C.KwhLeHEwVuV8G6Pn8Q3FoAHaE7?rs=1&pid=ImgDetMain&o=7&rm=3"
+        },
+        {
+          "id": 2,
+          "image": "https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=800"
+        },
+        {
+          "id": 3,
+          "image": "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=800"
+        }
+      ],
+      "facilitiesList": [
+        {
+          "text": "一线江景",
+          "icon": "icon-Golden-GateBridge"
+        },
+        {
+          "text": "意大利餐厅",
+          "icon": "icon-fork-knife"
+        },
+        {
+          "text": "江景下用餐",
+          "icon": "icon-a-godutch"
+        },
+        {
+          "text": "露天泳池",
+          "icon": "icon-youyongchi"
+        },
+        {
+          "text": "SPA水疗",
+          "icon": "icon-anmo"
+        }
+      ],
+      "roomList": [
+        {
+          "id": 1,
+          "name": "明·客居",
+          "price": 3888,
+          "image": "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800",
+          "detail": [
+            "1张1.8米大床",
+            "65㎡",
+            "2人入住",
+            "独栋古宅"
+          ],
+          "introduction": "明清古宅修复而成，私人庭院，传统与现代完美融合，专属管家。",
+          "tags": [
+            "免费取消",
+            "含早餐",
+            "立即确认"
+          ]
+        },
+        {
+          "id": 2,
+          "name": "清·庭居",
+          "price": 5888,
+          "image": "https://images.unsplash.com/photo-1591088398332-8a7791972843?w=800",
+          "detail": [
+            "1张2.0米特大床",
+            "120㎡",
+            "2人入住",
+            "独栋古宅"
+          ],
+          "introduction": "完整清代院落，私人泳池，独立书房，尊享安缦水疗体验。",
+          "tags": [
+            "免费取消",
+            "含早餐",
+            "立即确认"
+          ]
+        }
+      ],
+      "filterTagList": [
+        "免费取消",
+        "含早餐",
+        "独栋",
+        "立即确认"
+      ],
+      "amenitiesList": [
+        "吹风机",
+        "空调",
+        "智能电视",
+        "保险箱",
+        "安缦专属洗护",
+        "迷你吧",
+        "蓝牙音箱",
+        "中式茶台"
+      ],
+      "timePolicy": [
+        "15:00",
+        "12:00"
+      ]
+    },
+    {
+      "id": "11",
+      "userId": "3",
+      "status": "已发布",
+      "rejectReason": "",
+      "message": {
+        "id": 11,
+        "name": "上海建业里嘉佩乐",
+        "star": 4,
+        "point": 4.8,
+        "rank": "超棒",
+        "like": 2234,
+        "favorites": "3.5万收藏",
+        "image": "https://ts1.tc.mm.bing.net/th/id/R-C.7c580581557f94e3e2c4c28fc2271d28?rik=PbZEFfil%2fxYsDQ&riu=http%3a%2f%2fstatic.id-china.com.cn%2fimg%2fmixinfo%2f2018%2f02%2f26%2f7e2f13e387a24f3faacf53ee63684f2d.jpg&ehk=hA4TfAEARk4eY50vqn%2bqGdc3VlCOayLpMyzMul77AeQ%3d&risl=&pid=ImgRaw&r=0",
+        "position": "徐汇 · 建业里",
+        "address": "徐汇区建国西路480号",
+        "introduction": "石库门里的法式优雅 · 海派文化体验",
+        "label": [
+          "历史名宅",
+          "设计感",
+          "米其林餐厅",
+          "静谧花园",
+          "管家服务"
+        ],
+        "Ranking": "上海设计酒店榜 No.4",
+        "price": 2688,
+        "supplement": "住3付2 嘉佩乐文旅官服务 3项权益"
+      },
+      "bannerList": [
+        {
+          "id": 1,
+          "image": "https://ts1.tc.mm.bing.net/th/id/R-C.7c580581557f94e3e2c4c28fc2271d28?rik=PbZEFfil%2fxYsDQ&riu=http%3a%2f%2fstatic.id-china.com.cn%2fimg%2fmixinfo%2f2018%2f02%2f26%2f7e2f13e387a24f3faacf53ee63684f2d.jpg&ehk=hA4TfAEARk4eY50vqn%2bqGdc3VlCOayLpMyzMul77AeQ%3d&risl=&pid=ImgRaw&r=0"
+        },
+        {
+          "id": 2,
+          "image": "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?w=800"
+        },
+        {
+          "id": 3,
+          "image": "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800"
+        }
+      ],
+      "facilitiesList": [
+        {
+          "text": "一线江景",
+          "icon": "icon-Golden-GateBridge"
+        },
+        {
+          "text": "设计感",
+          "icon": "icon-sheji"
+        },
+        {
+          "text": "静谧花园",
+          "icon": "icon-huayuan"
+        },
+        {
+          "text": "SPA水疗",
+          "icon": "icon-anmo"
+        },
+        {
+          "text": "无边泳池",
+          "icon": "icon-youyongchi"
+        }
+      ],
+      "roomList": [
+        {
+          "id": 1,
+          "name": "石库门别墅",
+          "price": 2688,
+          "image": "https://images.unsplash.com/photo-1590490360182-c33d57733427?w=800",
+          "detail": [
+            "1张1.8米大床",
+            "111㎡",
+            "2人入住",
+            "独栋别墅"
+          ],
+          "introduction": "修复石库门建筑，私人庭院，法式设计融合海派风情，专属文旅官。",
+          "tags": [
+            "免费取消",
+            "含早餐",
+            "立即确认"
+          ]
+        },
+        {
+          "id": 2,
+          "name": "豪华石库门别墅",
+          "price": 3688,
+          "image": "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800",
+          "detail": [
+            "1张2.0米特大床",
+            "156㎡",
+            "2人入住",
+            "独栋别墅"
+          ],
+          "introduction": "三层独栋别墅，私人电梯，屋顶露台，尊享法餐体验。",
+          "tags": [
+            "免费取消",
+            "含早餐",
+            "立即确认"
+          ]
+        }
+      ],
+      "filterTagList": [
+        "免费取消",
+        "含早餐",
+        "别墅",
+        "立即确认"
+      ],
+      "amenitiesList": [
+        "吹风机",
+        "空调",
+        "智能电视",
+        "保险箱",
+        "高端洗护",
+        "迷你吧",
+        "蓝牙音箱",
+        "私人电梯"
+      ],
+      "timePolicy": [
+        "15:00",
+        "12:00"
+      ]
+    },
+    {
+      "id": "12",
+      "userId": "3",
+      "status": "已发布",
+      "rejectReason": "",
+      "message": {
+        "id": 12,
+        "name": "上海浦东丽思卡尔顿",
+        "star": 5,
+        "point": 4.7,
+        "rank": "超棒",
+        "like": 2890,
+        "favorites": "4.2万收藏",
+        "image": "https://ts2.tc.mm.bing.net/th/id/OIP-C.pZpS0sns9-Oujxiu8sX1tAHaFP?rs=1&pid=ImgDetMain&o=7&rm=3",
+        "position": "陆家嘴 · 世纪大道",
+        "address": "浦东新区世纪大道8号",
+        "introduction": "绅士淑女服务绅士淑女 · 云端奢华体验",
+        "label": [
+          "高空景观",
+          "米其林餐厅",
+          "行政酒廊",
+          "无边泳池",
+          "近地铁站"
+        ],
+        "Ranking": "上海服务酒店榜 No.1",
+        "price": 1788,
+        "supplement": "行政楼层礼遇 连住优惠 2项权益"
+      },
+      "bannerList": [
+        {
+          "id": 1,
+          "image": "https://ts2.tc.mm.bing.net/th/id/OIP-C.pZpS0sns9-Oujxiu8sX1tAHaFP?rs=1&pid=ImgDetMain&o=7&rm=3"
+        },
+        {
+          "id": 2,
+          "image": "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800"
+        },
+        {
+          "id": 3,
+          "image": "https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=800"
+        }
+      ],
+      "facilitiesList": [
+        {
+          "text": "宠物友好",
+          "icon": "icon-chongwu"
+        },
+        {
+          "text": "爵士乐团",
+          "icon": "icon-jueshile"
+        },
+        {
+          "text": "江景下用餐",
+          "icon": "icon-a-godutch"
+        },
+        {
+          "text": "免费停车",
+          "icon": "icon-tingche"
+        },
+        {
+          "text": "近地铁站",
+          "icon": "icon-ditiezhan"
+        }
+      ],
+      "roomList": [
+        {
+          "id": 1,
+          "name": "摩天景观客房",
+          "price": 1788,
+          "image": "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800",
+          "detail": [
+            "1张1.8米大床",
+            "50㎡",
+            "2人入住",
+            "49-58层"
+          ],
+          "introduction": "位于国金中心，东方明珠景观，丽思卡尔顿传奇服务，配备Asprey洗护。",
+          "tags": [
+            "免费取消",
+            "含早餐",
+            "立即确认"
+          ]
+        },
+        {
+          "id": 2,
+          "name": "外滩景观套房",
+          "price": 2988,
+          "image": "https://images.unsplash.com/photo-1591088398332-8a7791972843?w=800",
+          "detail": [
+            "1张2.0米特大床",
+            "85㎡",
+            "2人入住",
+            "59-68层"
+          ],
+          "introduction": "270度外滩全景，独立起居空间，行政酒廊礼遇，专属管家服务。",
+          "tags": [
+            "免费取消",
+            "含早餐",
+            "立即确认"
+          ]
+        }
+      ],
+      "filterTagList": [
+        "免费取消",
+        "含早餐",
+        "景观房",
+        "立即确认"
+      ],
+      "amenitiesList": [
+        "吹风机",
+        "空调",
+        "智能电视",
+        "保险箱",
+        "Asprey洗护",
+        "迷你吧",
+        "蓝牙音箱",
+        "意式咖啡机"
+      ],
+      "timePolicy": [
+        "15:00",
+        "12:00"
+      ]
+    },
+    {
+      "id": "13",
+      "userId": "3",
+      "status": "已发布",
+      "rejectReason": "",
+      "message": {
+        "id": 13,
+        "name": "上海阿纳迪酒店",
+        "star": 5,
+        "point": 4.6,
+        "rank": "超棒",
+        "like": 1654,
+        "favorites": "2.5万收藏",
+        "image": "https://ts1.tc.mm.bing.net/th/id/R-C.a75694dc32d729376c39199dc8648cac?rik=hyACihWbllgB3w&riu=http%3a%2f%2fimage.lhw.cn%2fimages%2fe396b03b198b75b1_1600_700.jpg&ehk=1bdaOxwm8oe68Uj7od19spKwPDJzzUY8pTanEQTwIMg%3d&risl=&pid=ImgRaw&r=0",
+        "position": "虹桥 · 临虹路",
+        "address": "长宁区临虹路7号",
+        "introduction": "养生疗愈 · 都市中的身心灵栖息地",
+        "label": [
+          "SPA水疗",
+          "静谧花园",
+          "管家服务",
+          "免费停车",
+          "近地铁站"
+        ],
+        "Ranking": "上海养生酒店榜 No.1",
+        "price": 1288,
+        "supplement": "含养生课程 疗愈体验 2项权益"
+      },
+      "bannerList": [
+        {
+          "id": 1,
+          "image": "https://ts1.tc.mm.bing.net/th/id/R-C.a75694dc32d729376c39199dc8648cac?rik=hyACihWbllgB3w&riu=http%3a%2f%2fimage.lhw.cn%2fimages%2fe396b03b198b75b1_1600_700.jpg&ehk=1bdaOxwm8oe68Uj7od19spKwPDJzzUY8pTanEQTwIMg%3d&risl=&pid=ImgRaw&r=0"
+        },
+        {
+          "id": 2,
+          "image": "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=800"
+        },
+        {
+          "id": 3,
+          "image": "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800"
+        }
+      ],
+      "facilitiesList": [
+        {
+          "text": "网红酒店",
+          "icon": "icon-jiudian"
+        },
+        {
+          "text": "设计感",
+          "icon": "icon-sheji"
+        },
+        {
+          "text": "行政酒廊",
+          "icon": "icon-hangzhengjiulang"
+        },
+        {
+          "text": "高空景观",
+          "icon": "icon-w_fengjing"
+        },
+        {
+          "text": "一线江景",
+          "icon": "icon-Golden-GateBridge"
+        }
+      ],
+      "roomList": [
+        {
+          "id": 1,
+          "name": "喜悦房",
+          "price": 1288,
+          "image": "https://images.unsplash.com/photo-1590490360182-c33d57733427?w=800",
+          "detail": [
+            "1张1.8米大床",
+            "45㎡",
+            "2人入住",
+            "3-8层"
+          ],
+          "introduction": "纳米能量地板，疗愈音乐，助眠香薰，配备血压仪和体质测试。",
+          "tags": [
+            "免费取消",
+            "含早餐",
+            "立即确认"
+          ]
+        },
+        {
+          "id": 2,
+          "name": "衡悦房",
+          "price": 1688,
+          "image": "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800",
+          "detail": [
+            "1张2.0米特大床",
+            "55㎡",
+            "2人入住",
+            "9-12层"
+          ],
+          "introduction": "专属疗愈管家，私人阳台，深度SPA体验，定制养生餐食。",
+          "tags": [
+            "免费取消",
+            "含早餐",
+            "立即确认"
+          ]
+        }
+      ],
+      "filterTagList": [
+        "免费取消",
+        "含早餐",
+        "养生房",
+        "立即确认"
+      ],
+      "amenitiesList": [
+        "吹风机",
+        "空调",
+        "智能电视",
+        "保险箱",
+        "天然洗护",
+        "迷你吧",
+        "蓝牙音箱",
+        "血压仪"
+      ],
+      "timePolicy": [
+        "15:00",
+        "12:00"
+      ]
+    },
+    {
+      "id": "14",
+      "userId": "3",
+      "status": "已下线",
+      "rejectReason": "",
+      "message": {
+        "id": 14,
+        "name": "上海鲁能JW万豪侯爵",
+        "star": 5,
+        "point": 4.7,
+        "rank": "超棒",
+        "like": 2456,
+        "favorites": "3.8万收藏",
+        "image": "https://ts4.tc.mm.bing.net/th/id/OIP-C.IDohg4enEjxpAfDQ_jLh_wHaKI?rs=1&pid=ImgDetMain&o=7&rm=3",
+        "position": "陆家嘴 · 滨江大道",
+        "address": "浦东新区滨江大道1777号",
+        "introduction": "黄浦江畔的现代奢华 · 侯爵级服务体验",
+        "label": [
+          "一线江景",
+          "无边泳池",
+          "行政酒廊",
+          "设计感",
+          "近地铁站"
+        ],
+        "Ranking": "上海江景酒店榜 No.3",
+        "price": 1388,
+        "supplement": "江景房升级 行政礼遇 2项权益"
+      },
+      "bannerList": [
+        {
+          "id": 1,
+          "image": "https://ts4.tc.mm.bing.net/th/id/OIP-C.IDohg4enEjxpAfDQ_jLh_wHaKI?rs=1&pid=ImgDetMain&o=7&rm=3"
+        },
+        {
+          "id": 2,
+          "image": "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800"
+        },
+        {
+          "id": 3,
+          "image": "https://images.unsplash.com/photo-1582719508461-905c673771fd?w=800"
+        }
+      ],
+      "facilitiesList": [
+        {
+          "text": "网红酒店",
+          "icon": "icon-jiudian"
+        },
+        {
+          "text": "免费停车",
+          "icon": "icon-tingche"
+        },
+        {
+          "text": "一线江景",
+          "icon": "icon-Golden-GateBridge"
+        },
+        {
+          "text": "历史名宅",
+          "icon": "icon-homestay"
+        },
+        {
+          "text": "意大利餐厅",
+          "icon": "icon-fork-knife"
+        }
+      ],
+      "roomList": [
+        {
+          "id": 1,
+          "name": "豪华江景客房",
+          "price": 1388,
+          "image": "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800",
+          "detail": [
+            "1张1.8米大床",
+            "42㎡",
+            "2人入住",
+            "10-25层"
+          ],
+          "introduction": "弧形落地窗，180度江景，侯爵级服务标准，配备高端床品。",
+          "tags": [
+            "免费取消",
+            "含早餐",
+            "立即确认"
+          ]
+        },
+        {
+          "id": 2,
+          "name": "行政江景套房",
+          "price": 2188,
+          "image": "https://images.unsplash.com/photo-1591088398332-8a7791972843?w=800",
+          "detail": [
+            "1张2.0米特大床",
+            "75㎡",
+            "2人入住",
+            "26-35层"
+          ],
+          "introduction": "独立客厅与卧室，全景江景，行政酒廊全天候服务，尊享侯爵礼遇。",
+          "tags": [
+            "免费取消",
+            "含早餐",
+            "立即确认"
+          ]
+        }
+      ],
+      "filterTagList": [
+        "免费取消",
+        "含早餐",
+        "江景房",
+        "立即确认"
+      ],
+      "amenitiesList": [
+        "吹风机",
+        "空调",
+        "智能电视",
+        "保险箱",
+        "高端洗护",
+        "迷你吧",
+        "蓝牙音箱",
+        "胶囊咖啡机"
+      ],
+      "timePolicy": [
+        "15:00",
         "12:00"
       ]
     }
