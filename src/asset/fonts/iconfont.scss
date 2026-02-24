@@ -14,7 +14,21 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+.icon-shenhe:before {
+  content: "\e69e";
+}
 
+.icon-yuanyin:before {
+  content: "\e636";
+}
+
+.icon-huifu:before {
+  content: "\e676";
+}
+
+.icon-xiaxian:before {
+  content: "\e6e0";
+}
 .icon-chakan:before {
   content: "\e604";
 }

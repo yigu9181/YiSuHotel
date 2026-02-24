@@ -54,17 +54,23 @@ interface HotelAuditProps {
   selectedHotel: Hotel | null;
   onAuditHotel: ((hotel: Hotel, action: string, reason?: string) => void) | undefined;
   onRecoverHotel: ((hotel: Hotel) => void) | undefined;
+  refreshKey: number; // 用于触发酒店列表刷新
 }
 
-export default function HotelAudit({ activeTab, userInfo, onHotelSelect, selectedHotel, onAuditHotel, onRecoverHotel }: HotelAuditProps) {
+export default function HotelAudit({ activeTab, userInfo, onHotelSelect, selectedHotel, onAuditHotel, onRecoverHotel, refreshKey }: HotelAuditProps) {
   const [hotels, setHotels] = useState<Hotel[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [filter, setFilter] = useState<string>('all'); // all, pending, approved, rejected, offline
 
+  // 审核不通过原因输入弹框状态
+  const [rejectModalVisible, setRejectModalVisible] = useState<boolean>(false);
+  const [rejectReason, setRejectReason] = useState<string>('');
+  const [currentHotel, setCurrentHotel] = useState<Hotel | null>(null);
+
   // 获取所有酒店列表（管理员视角）
   useEffect(() => {
     fetchAllHotels();
-  }, []);
+  }, [refreshKey]);
 
   const fetchAllHotels = async () => {
     setLoading(true);
@@ -112,9 +118,12 @@ export default function HotelAudit({ activeTab, userInfo, onHotelSelect, selecte
   // 处理审核按钮点击
   const handleAuditHotelClick = (e: React.MouseEvent, hotel: Hotel) => {
     e.stopPropagation();
+
+    // 显示审核结果选择（使用原来的 showModal）
     Taro.showModal({
       title: '审核酒店',
       content: '请选择审核结果',
+      confirmColor: '#3690f7',
       confirmText: '通过',
       cancelText: '不通过',
       success: (res) => {
@@ -124,31 +133,44 @@ export default function HotelAudit({ activeTab, userInfo, onHotelSelect, selecte
             onAuditHotel(hotel, 'approve');
           }
         } else if (res.cancel) {
-          // 不通过审核，弹出输入框要求输入理由
-          Taro.showModal({
-            title: '审核不通过',
-            content: '请输入不通过原因',
-            editable: true,
-            placeholderText: '请输入原因（必填）',
-            success: (reasonRes) => {
-              if (reasonRes.confirm) {
-                const reason = reasonRes.content || reasonRes.value || '';
-                if (reason && reason.trim()) {
-                  if (onAuditHotel) {
-                    onAuditHotel(hotel, 'reject', reason.trim());
-                  }
-                } else {
-                  Taro.showToast({
-                    title: '请输入不通过原因',
-                    icon: 'none'
-                  });
-                }
-              }
-            }
-          });
+          // 不通过审核，打开自定义的原因输入弹框
+          setRejectReason('');
+          setCurrentHotel(hotel);
+          setRejectModalVisible(true);
         }
       }
     });
+  };
+
+  // 处理不通过原因提交
+  const handleRejectSubmit = () => {
+    if (!currentHotel || !onAuditHotel) return;
+
+    if (!rejectReason || rejectReason.trim() === '') {
+      Taro.showToast({
+        title: '请输入不通过原因',
+        icon: 'none'
+      });
+      return;
+    }
+
+    // 执行审核不通过操作
+    onAuditHotel(currentHotel, 'reject', rejectReason.trim());
+
+    // 关闭弹框
+    setRejectModalVisible(false);
+    // 重置状态
+    setRejectReason('');
+    setCurrentHotel(null);
+  };
+
+  // 处理不通过原因取消
+  const handleRejectCancel = () => {
+    // 关闭弹框
+    setRejectModalVisible(false);
+    // 重置状态
+    setRejectReason('');
+    setCurrentHotel(null);
   };
 
   // 处理查看不通过理由
@@ -158,6 +180,7 @@ export default function HotelAudit({ activeTab, userInfo, onHotelSelect, selecte
       Taro.showModal({
         title: '不通过原因',
         content: hotel.rejectReason,
+        confirmColor: '#3690f7',
         confirmText: '确定',
         cancelText: '取消'
       });
@@ -253,7 +276,7 @@ export default function HotelAudit({ activeTab, userInfo, onHotelSelect, selecte
             <Text>待审核</Text>
           </View>
           <View className={`admin-filter-item ${filter === 'approved' ? 'admin-filter-item-active' : ''}`} onClick={() => setFilter('approved')}>
-            <Text>已审核</Text>
+            <Text>已发布</Text>
           </View>
           <View className={`admin-filter-item ${filter === 'rejected' ? 'admin-filter-item-active' : ''}`} onClick={() => setFilter('rejected')}>
             <Text>未通过</Text>
@@ -313,29 +336,32 @@ export default function HotelAudit({ activeTab, userInfo, onHotelSelect, selecte
                       &nbsp;&nbsp;查看
                     </View>
                     {hotel.status === '待审核' && (
-                      <View className='hotel-operation-item' onClick={(e) => handleAuditHotelClick(e, hotel)}>
-                        <text className='iconfont icon-bianji icon'></text>
+                      <View className='hotel-operation-item' onClick={(e) => handleAuditHotelClick(e, hotel)} style={{ color: '#ffcf24' }}>
+                        <text className='iconfont icon-shenhe icon' ></text>
                         &nbsp;&nbsp;审核
+                      </View>
+                    )}
+                    {hotel.status === '未通过' && (
+                      <View className='hotel-operation-item' onClick={(e) => handleViewRejectReason(e, hotel)} style={{ color: '#ff5900' }}>
+                        <text className='iconfont icon-yuanyin icon' ></text>
+                        &nbsp;&nbsp;原因
                       </View>
                     )}
                     {hotel.status === '已发布' && (
                       <View className='hotel-operation-item offline' onClick={(e) => handleOfflineHotel(e, hotel)}>
-                        <text className='iconfont icon-shanchu icon'></text>
+                        <text className='iconfont icon-xiaxian icon'></text>
                         &nbsp;&nbsp;下线
                       </View>
                     )}
                     {hotel.status === '已下线' && (
                       <View className='hotel-operation-item recover' onClick={(e) => handleRecoverHotel(e, hotel)}>
-                        <text className='iconfont icon-bianji icon'></text>
+                        <text className='iconfont icon-huifu icon'></text>
                         &nbsp;&nbsp;恢复
                       </View>
                     )}
                   </View>
                   <View className={`hotel-state ${getStatusClass(hotel.status)}`}>
                     {getStatusText(hotel.status)}
-                    {hotel.status === '未通过' && (
-                      <Text className='reject-reason-hint' onClick={(e) => handleViewRejectReason(e, hotel)}>（点击查看理由）</Text>
-                    )}
                   </View>
                 </View>
               </View>
@@ -356,6 +382,53 @@ export default function HotelAudit({ activeTab, userInfo, onHotelSelect, selecte
           )}
         </View>
       </View>
+
+      {rejectModalVisible && (
+        <View
+          className='modalOverlay'
+          onClick={handleRejectCancel}
+        >
+          <View
+            className='modalContent'
+            onClick={(e) => e.stopPropagation()}
+          >
+            <View className='modalTitle'>审核不通过</View>
+
+            <View className='modalLabel'>
+              请输入不通过原因（必填）：
+            </View>
+
+            <View className='textareaContainer'>
+              <textarea
+                value={rejectReason}
+                onChange={(e) => setRejectReason(e.target.value)}
+                placeholder='例如：酒店信息不完整、图片质量差等'
+                className='textarea'
+                autoFocus
+              />
+            </View>
+
+            <View className='buttonGroup'>
+              <Button
+                type='default'
+                size='default'
+                className='buttonBase buttonDefault'
+                onClick={handleRejectCancel}
+              >
+                取消
+              </Button>
+              <Button
+                type='primary'
+                size='default'
+                className='buttonBase buttonPrimary'
+                onClick={handleRejectSubmit}
+              >
+                提交
+              </Button>
+            </View>
+          </View>
+        </View>
+      )}
     </View>
   )
 }

@@ -23,10 +23,8 @@
     {
       "id": "1",
       "userId": "3",
-      "status": "已发布",
+      "status": "已下线",
       "rejectReason": "",
-
-
       "message": {
         "id": 1,
         "name": "上海陆家嘴禧玥酒店",
@@ -167,8 +165,6 @@
       "userId": "3",
       "status": "未通过",
       "rejectReason": "酒店信息不完整，缺少必要的设施描述和房间详情。",
-
-
       "message": {
         "id": 2,
         "name": "上海外滩W酒店",
@@ -308,8 +304,6 @@
       "userId": "3",
       "status": "待审核",
       "rejectReason": "",
-
-
       "message": {
         "id": 3,
         "name": "上海和平饭店",
@@ -447,11 +441,8 @@
     {
       "id": "4",
       "userId": "3",
-      "status": "已下线",
+      "status": "已发布",
       "rejectReason": "",
-
-
-
       "message": {
         "id": 4,
         "name": "上海柏悦酒店",
@@ -591,8 +582,6 @@
       "userId": "3",
       "status": "未通过",
       "rejectReason": "酒店位置信息不准确，需要提供详细的地址和交通说明。",
-
-
       "message": {
         "id": 5,
         "name": "上海素凯泰酒店",

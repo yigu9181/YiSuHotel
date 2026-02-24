@@ -135,7 +135,8 @@ export default function Index () {
         <View className={`user-nav-tab-text add-hotel ${!activeTab ? 'active' : ''}`}
           onClick={() => {
             setActiveTab(false);
-            setEditHotel(null);
+
+
             setSubmitMode('submit');
           }}
         >

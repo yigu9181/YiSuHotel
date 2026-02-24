@@ -1,7 +1,7 @@
 import { View, Text, Image } from '@tarojs/components'
 import { useEffect,useState } from 'react'
 import Taro from '@tarojs/taro'
-import HotelAudit from '../../components/adminPage/hotelAudit/hotelAudit'
+import HotelAudit from '@/components/managerPage/hotelAudit/hotelAudit'
 import './index.scss'
 
 export default function Index () {
@@ -30,7 +30,9 @@ export default function Index () {
     }
   }, [])
   const [activeTab, setActiveTab] = useState(true)
-   const handleLogout = () => {
+  const [refreshKey, setRefreshKey] = useState(0) // 用于触发酒店列表刷新
+  
+  const handleLogout = () => {
       Taro.showModal({
         title: '确认退出',
         content: '您确定要退出登录吗？',
@@ -54,7 +56,7 @@ export default function Index () {
   };
 
   // 处理审核酒店
-  const handleAuditHotel = (hotel, action, reason) => {
+  const handleAuditHotel = async (hotel, action, reason) => {
     let actionText = '';
     let newStatus = '';
 
@@ -75,44 +77,93 @@ export default function Index () {
         return;
     }
 
-    // 这里应该调用API进行审核操作
-    console.log(`${actionText}酒店:`, hotel.id);
-    console.log('新状态:', newStatus);
-    if (reason) {
-      console.log('不通过原因:', reason);
+    try {
+      // 调用API更新酒店状态
+      const response = await Taro.request({
+        url: `http://localhost:3000/hotels/${hotel.id}`,
+        method: 'PUT',
+        data: {
+          ...hotel,
+          status: newStatus,
+          rejectReason: reason || ''
+        }
+      });
+
+      if (response.statusCode === 200) {
+        // 审核成功
+        console.log(`${actionText}酒店:`, hotel.id);
+        console.log('新状态:', newStatus);
+        if (reason) {
+          console.log('不通过原因:', reason);
+        }
+
+        Taro.showToast({
+          title: `${actionText}成功`,
+          icon: 'success'
+        });
+
+        // 重新获取酒店列表
+        // 通过更新refreshKey来触发HotelAudit组件重新加载数据
+        setRefreshKey(prev => prev + 1);
+        // 同时更新selectedHotel以反映最新状态
+        setSelectedHotel({...hotel, status: newStatus, rejectReason: reason || ''});
+      } else {
+        throw new Error('更新失败');
+      }
+    } catch (error) {
+      console.error('审核操作失败:', error);
+      Taro.showToast({
+        title: `${actionText}失败`,
+        icon: 'none'
+      });
     }
-
-    // 模拟审核成功
-    Taro.showToast({
-      title: `${actionText}成功`,
-      icon: 'success'
-    });
-
-    // 重新获取酒店列表
-    // 这里应该刷新酒店列表
   };
 
   // 处理恢复酒店
-  const handleRecoverHotel = (hotel) => {
+  const handleRecoverHotel = async (hotel) => {
     Taro.showModal({
       title: '确认恢复',
       content: '您确定要恢复这家酒店吗？',
       confirmText: '确定',
       confirmColor: '#3690f7',
       cancelText: '取消',
-      success: (res) => {
+      success: async (res) => {
         if (res.confirm) {
-          // 这里应该调用API恢复酒店
-          console.log('恢复酒店:', hotel.id);
+          try {
+            // 调用API恢复酒店
+            const response = await Taro.request({
+              url: `http://localhost:3000/hotels/${hotel.id}`,
+              method: 'PUT',
+              data: {
+                ...hotel,
+                status: '已发布'
+              }
+            });
 
-          // 模拟恢复成功
-          Taro.showToast({
-            title: '恢复成功',
-            icon: 'success'
-          });
+            if (response.statusCode === 200) {
+              console.log('恢复酒店:', hotel.id);
 
-          // 重新获取酒店列表
-          // 这里应该刷新酒店列表
+              // 恢复成功
+              Taro.showToast({
+                title: '恢复成功',
+                icon: 'success'
+              });
+
+              // 重新获取酒店列表
+              // 通过更新refreshKey来触发HotelAudit组件重新加载数据
+              setRefreshKey(prev => prev + 1);
+              // 同时更新selectedHotel以反映最新状态
+              setSelectedHotel({...hotel, status: '已发布'});
+            } else {
+              throw new Error('更新失败');
+            }
+          } catch (error) {
+            console.error('恢复操作失败:', error);
+            Taro.showToast({
+              title: '恢复失败',
+              icon: 'none'
+            });
+          }
         }
       }
     });
@@ -131,7 +182,7 @@ export default function Index () {
        <View className='user-nav-tab-text name'><Text className='iconfont icon-yonghu icon'></Text>用户名：{userInfo?.username || 'hhhc123'}</View>
        <View className='user-nav-tab-text logout' onClick={handleLogout}>退出登录</View>
       </View>
-      <HotelAudit activeTab={activeTab} userInfo={userInfo} onHotelSelect={handleHotelSelect} selectedHotel={selectedHotel} onAuditHotel={handleAuditHotel} onRecoverHotel={handleRecoverHotel} />
+      <HotelAudit activeTab={activeTab} userInfo={userInfo} onHotelSelect={handleHotelSelect} selectedHotel={selectedHotel} onAuditHotel={handleAuditHotel} onRecoverHotel={handleRecoverHotel} refreshKey={refreshKey} />
    </View>
  )
 }
