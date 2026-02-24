@@ -148,6 +148,7 @@ export default function Index() {
           ))}
         </Swiper>
       </View>
+      <View className='preview-hotel-content'>
       <View className='hotel-message'>
         <View className='hexagon'>
           <View className='icon-koubei iconfont icon'></View>
@@ -245,6 +246,7 @@ export default function Index() {
             </View>
           </View>
         ))}
+      </View>
       </View>
       <View className='hotel-bottom'>
         <View className='icon-box'>

@@ -33,6 +33,7 @@ export default function Index () {
     }
   }, [])
   const [activeTab, setActiveTab] = useState(true)
+  const [refreshKey, setRefreshKey] = useState(0) // 用于触发酒店列表刷新
    const handleLogout = () => {
       Taro.showModal({
         title: '确认退出',
@@ -85,6 +86,46 @@ export default function Index () {
                 // 执行删除操作
                 console.log('删除酒店:', hotel.id);
                 try {
+                  // 收集所有需要删除的图片路径
+                  const imagesToDelete = [];
+                  
+                  // 酒店主图
+                  if (hotel.message?.image) {
+                    imagesToDelete.push(hotel.message.image);
+                  }
+                  
+                  // 轮播图
+                  if (hotel.bannerList && hotel.bannerList.length > 0) {
+                    hotel.bannerList.forEach(banner => {
+                      if (banner.image) {
+                        imagesToDelete.push(banner.image);
+                      }
+                    });
+                  }
+                  
+                  // 房间图片
+                  if (hotel.roomList && hotel.roomList.length > 0) {
+                    hotel.roomList.forEach(room => {
+                      if (room.image) {
+                        imagesToDelete.push(room.image);
+                      }
+                    });
+                  }
+                  
+                  // 删除图片文件
+                  for (const imageUrl of imagesToDelete) {
+                    try {
+                      await Taro.request({
+                        url: 'http://localhost:3001/delete-image',
+                        method: 'POST',
+                        data: { imageUrl }
+                      });
+                    } catch (error) {
+                      console.error('删除图片失败:', error);
+                      // 继续删除其他图片，不中断流程
+                    }
+                  }
+                  
                   // 调用API删除酒店
                   const response = await Taro.request({
                     url: `http://localhost:3000/hotels/${hotel.id}`,
@@ -99,9 +140,8 @@ export default function Index () {
                     });
 
                     // 重新获取酒店列表
-                    // 由于 MyHotel 组件在 userInfo 变化时会重新获取酒店列表
-                    // 我们可以通过重新设置 userInfo 来触发刷新
-                    setUserInfo({...userInfo});
+                    // 通过更新refreshKey来触发MyHotel组件重新加载数据
+                    setRefreshKey(prev => prev + 1);
                   } else {
                     throw new Error('删除失败');
                   }
@@ -127,7 +167,7 @@ export default function Index () {
             if (!activeTab) {
               Taro.showModal({
                 title: '确认切换',
-                content: '切换到我的酒店后，当前编辑的内容将不会保存，确定要切换吗？',
+                content: '切换到我的酒店后，当前编辑的内容以及未提交过的酒店将不会保存，确定要切换吗？',
                 confirmText: '确定',
                 confirmColor: '#3690f7',
                 cancelText: '取消',
@@ -161,8 +201,8 @@ export default function Index () {
        <View className='user-nav-tab-text name'><Text className='iconfont icon-yonghu icon'></Text>用户名：{userInfo?.username || 'hhhc123'}</View>
        <View className='user-nav-tab-text logout' onClick={handleLogout}>退出登录</View>
       </View>
-      <MyHotel activeTab={activeTab} userInfo={userInfo} onHotelSelect={handleHotelSelect} selectedHotel={selectedHotel} onEditHotel={handleEditHotel} onDeleteHotel={handleDeleteHotel} />
-      <AddHotel activeTab={activeTab} userInfo={userInfo} editHotel={editHotel} submitMode={submitMode} />
+      <MyHotel activeTab={activeTab} userInfo={userInfo} onHotelSelect={handleHotelSelect} selectedHotel={selectedHotel} onEditHotel={handleEditHotel} onDeleteHotel={handleDeleteHotel} refreshKey={refreshKey} />
+     <AddHotel activeTab={activeTab} userInfo={userInfo} editHotel={editHotel} submitMode={submitMode} setActiveTab={setActiveTab} setRefreshKey={setRefreshKey} />
    </View>
  )
 }

@@ -4,7 +4,7 @@ import Taro from '@tarojs/taro'
 
 import './index.scss'
 
-export default function AddHotel({ activeTab, userInfo, editHotel, submitMode = 'submit' }) {
+export default function AddHotel({ activeTab, userInfo, editHotel, submitMode = 'submit', setActiveTab, setRefreshKey }) {
   // 表单输入字段状态
   const [hotelName, setHotelName] = useState('');
   const [hotelIntroduction, setHotelIntroduction] = useState('');
@@ -186,7 +186,7 @@ export default function AddHotel({ activeTab, userInfo, editHotel, submitMode = 
   const handleSubmit = async () => {
     Taro.showModal({
       title: '确认提交',
-      content: '您确定要提交表单吗？提交后数据将保存到数据库。',
+      content: '您确定要提交表单吗？需要审核通过后才能显示在酒店列表中。',
       confirmText: '确定',
       confirmColor: '#3690f7',
       cancelText: '取消',
@@ -281,6 +281,15 @@ export default function AddHotel({ activeTab, userInfo, editHotel, submitMode = 
           console.log('Form data:', formData);
 
           try {
+            // 调试：检查数据大小
+            const formDataString = JSON.stringify(formData);
+            console.log('Form data size:', (formDataString.length / 1024).toFixed(2), 'KB');
+            
+            // 调试：检查图片数据
+            console.log('Hotel image:', hotelImage);
+            console.log('Gallery images:', galleryImages);
+            console.log('Rooms:', rooms);
+            
             let response;
             if (submitMode === 'update' && editHotel) {
               // 更新现有酒店
@@ -298,6 +307,9 @@ export default function AddHotel({ activeTab, userInfo, editHotel, submitMode = 
               });
             }
 
+            console.log('Response status:', response.statusCode);
+            console.log('Response data:', response.data);
+            
             if (response.statusCode === 200 || response.statusCode === 201) {
               // 提交成功
               console.log('提交成功:', response.data);
@@ -306,7 +318,7 @@ export default function AddHotel({ activeTab, userInfo, editHotel, submitMode = 
                 icon: 'success'
               });
             } else {
-              throw new Error('提交失败');
+              throw new Error(`提交失败，状态码: ${response.statusCode}`);
             }
           } catch (error) {
             console.error('提交操作失败:', error);
@@ -316,6 +328,8 @@ export default function AddHotel({ activeTab, userInfo, editHotel, submitMode = 
             });
           }
         }
+        setRefreshKey(prev => prev + 1);
+        setActiveTab(true);
       }
     });
   };
@@ -436,34 +450,165 @@ export default function AddHotel({ activeTab, userInfo, editHotel, submitMode = 
     setSelectedStar(star);
   };
 
-  const handleImageUpload = (e) => {
+  const handleImageUpload = async (e) => {
     const file = e.target.files[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setHotelImage(reader.result as string);
-      };
-      reader.readAsDataURL(file);
+      // 检查文件大小，限制在1MB以内
+      if (file.size > 1024 * 1024) {
+        Taro.showToast({
+          title: '图片大小不能超过1MB',
+          icon: 'none'
+        });
+        return;
+      }
+      
+      // 如果有旧图片，先删除
+      if (hotelImage) {
+        try {
+          await Taro.request({
+            url: 'http://localhost:3001/delete-image',
+            method: 'POST',
+            data: { imageUrl: hotelImage }
+          });
+          console.log('旧图片删除成功:', hotelImage);
+        } catch (error) {
+          console.error('删除旧图片失败:', error);
+          // 继续上传新图片，不中断流程
+        }
+      }
+      
+      // 创建FormData对象
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('type', 'hotel');
+      
+      try {
+        // 显示加载提示
+        Taro.showLoading({
+          title: '上传中...'
+        });
+        
+        // 上传图片到服务器
+        const response = await Taro.request({
+          url: 'http://localhost:3001/upload',
+          method: 'POST',
+          data: formData
+        });
+        
+        // 隐藏加载提示
+        Taro.hideLoading();
+        
+        if (response.statusCode === 200 && response.data.success) {
+          const filePath = response.data.path;
+          console.log('图片保存路径:', filePath);
+          setHotelImage(filePath);
+          
+          // 显示成功提示
+          Taro.showToast({
+            title: '图片上传成功',
+            icon: 'success'
+          });
+        } else {
+          throw new Error('上传失败');
+        }
+      } catch (error) {
+        // 隐藏加载提示
+        Taro.hideLoading();
+        
+        console.error('上传失败:', error);
+        Taro.showToast({
+          title: '上传失败，请重试',
+          icon: 'none'
+        });
+      }
     }
   };
 
-  const handleGalleryImageUpload = (e) => {
+  const handleGalleryImageUpload = async (e) => {
     const file = e.target.files[0];
     if (file && galleryImages.length < 3) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        const newImage = {
-          id: galleryIdCounter,
-          image: reader.result as string
-        };
-        setGalleryImages([...galleryImages, newImage]);
-        setGalleryIdCounter(galleryIdCounter + 1);
-      };
-      reader.readAsDataURL(file);
+      // 检查文件大小，限制在1MB以内
+      if (file.size > 1024 * 1024) {
+        Taro.showToast({
+          title: '图片大小不能超过1MB',
+          icon: 'none'
+        });
+        return;
+      }
+      
+      // 创建FormData对象
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('type', 'gallery');
+      
+      try {
+        // 显示加载提示
+        Taro.showLoading({
+          title: '上传中...'
+        });
+        
+        // 上传图片到服务器
+        const response = await Taro.request({
+          url: 'http://localhost:3001/upload',
+          method: 'POST',
+          data: formData
+        });
+        
+        // 隐藏加载提示
+        Taro.hideLoading();
+        
+        if (response.statusCode === 200 && response.data.success) {
+          const filePath = response.data.path;
+          console.log('轮播图保存路径:', filePath);
+          
+          const newImage = {
+            id: galleryIdCounter,
+            image: filePath
+          };
+          setGalleryImages([...galleryImages, newImage]);
+          setGalleryIdCounter(galleryIdCounter + 1);
+          
+          // 显示成功提示
+          Taro.showToast({
+            title: '轮播图上传成功',
+            icon: 'success'
+          });
+        } else {
+          throw new Error('上传失败');
+        }
+      } catch (error) {
+        // 隐藏加载提示
+        Taro.hideLoading();
+        
+        console.error('上传失败:', error);
+        Taro.showToast({
+          title: '上传失败，请重试',
+          icon: 'none'
+        });
+      }
     }
   };
 
-  const handleRemoveGalleryImage = (id) => {
+  const handleRemoveGalleryImage = async (id) => {
+    // 找到要删除的图片
+    const imageToRemove = galleryImages.find(image => image.id === id);
+    
+    if (imageToRemove && imageToRemove.image) {
+      try {
+        // 删除图片文件
+        await Taro.request({
+          url: 'http://localhost:3001/delete-image',
+          method: 'POST',
+          data: { imageUrl: imageToRemove.image }
+        });
+        console.log('轮播图删除成功:', imageToRemove.image);
+      } catch (error) {
+        console.error('删除轮播图失败:', error);
+        // 继续删除列表中的图片，不中断流程
+      }
+    }
+    
+    // 更新状态
     const updatedImages = galleryImages.filter(image => image.id !== id);
     setGalleryImages(updatedImages);
   };
@@ -492,7 +637,26 @@ export default function AddHotel({ activeTab, userInfo, editHotel, submitMode = 
     setRoomIdCounter(roomIdCounter + 1);
   };
 
-  const handleDeleteRoom = (roomId) => {
+  const handleDeleteRoom = async (roomId) => {
+    // 找到要删除的房间
+    const roomToDelete = rooms.find(room => room.id === roomId);
+    
+    if (roomToDelete && roomToDelete.image) {
+      try {
+        // 删除房间图片
+        await Taro.request({
+          url: 'http://localhost:3001/delete-image',
+          method: 'POST',
+          data: { imageUrl: roomToDelete.image }
+        });
+        console.log('房间图片删除成功:', roomToDelete.image);
+      } catch (error) {
+        console.error('删除房间图片失败:', error);
+        // 继续删除房间，不中断流程
+      }
+    }
+    
+    // 更新状态
     const updatedRooms = rooms.filter(room => room.id !== roomId);
     // 重新分配连续的id
     const roomsWithUpdatedIds = updatedRooms.map((room, index) => ({
@@ -516,16 +680,82 @@ export default function AddHotel({ activeTab, userInfo, editHotel, submitMode = 
     ));
   };
 
-  const handleRoomImageChange = (roomId, e) => {
+  const handleRoomImageChange = async (roomId, e) => {
     const file = e.target.files[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setRooms(rooms.map(room =>
-          room.id === roomId ? { ...room, image: reader.result as string } : room
-        ));
-      };
-      reader.readAsDataURL(file);
+      // 检查文件大小，限制在1MB以内
+      if (file.size > 1024 * 1024) {
+        Taro.showToast({
+          title: '图片大小不能超过1MB',
+          icon: 'none'
+        });
+        return;
+      }
+      
+      // 找到对应的房间，检查是否有旧图片
+      const room = rooms.find(r => r.id === roomId);
+      if (room && room.image) {
+        try {
+          // 删除旧图片
+          await Taro.request({
+            url: 'http://localhost:3001/delete-image',
+            method: 'POST',
+            data: { imageUrl: room.image }
+          });
+          console.log('旧房间图片删除成功:', room.image);
+        } catch (error) {
+          console.error('删除旧房间图片失败:', error);
+          // 继续上传新图片，不中断流程
+        }
+      }
+      
+      // 创建FormData对象
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('type', `room_${roomId}`);
+      
+      try {
+        // 显示加载提示
+        Taro.showLoading({
+          title: '上传中...'
+        });
+        
+        // 上传图片到服务器
+        const response = await Taro.request({
+          url: 'http://localhost:3001/upload',
+          method: 'POST',
+          data: formData
+        });
+        
+        // 隐藏加载提示
+        Taro.hideLoading();
+        
+        if (response.statusCode === 200 && response.data.success) {
+          const filePath = response.data.path;
+          console.log('房间图片保存路径:', filePath);
+          
+          setRooms(rooms.map(room =>
+            room.id === roomId ? { ...room, image: filePath } : room
+          ));
+          
+          // 显示成功提示
+          Taro.showToast({
+            title: '房间图片上传成功',
+            icon: 'success'
+          });
+        } else {
+          throw new Error('上传失败');
+        }
+      } catch (error) {
+        // 隐藏加载提示
+        Taro.hideLoading();
+        
+        console.error('上传失败:', error);
+        Taro.showToast({
+          title: '上传失败，请重试',
+          icon: 'none'
+        });
+      }
     }
   };
 

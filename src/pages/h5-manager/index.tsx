@@ -31,7 +31,7 @@ export default function Index () {
   }, [])
   const [activeTab, setActiveTab] = useState(true)
   const [refreshKey, setRefreshKey] = useState(0) // 用于触发酒店列表刷新
-  
+
   const handleLogout = () => {
       Taro.showModal({
         title: '确认退出',

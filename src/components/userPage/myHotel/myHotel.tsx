@@ -54,9 +54,10 @@ interface MyHotelProps {
   selectedHotel: Hotel | null;
   onEditHotel: ((hotel: Hotel) => void) | undefined;
   onDeleteHotel: ((hotel: Hotel) => void) | undefined;
+  refreshKey: number; // 用于触发酒店列表刷新
 }
 
-export default function MyHotel({ activeTab, userInfo, onHotelSelect, selectedHotel, onEditHotel, onDeleteHotel }: MyHotelProps) {
+export default function MyHotel({ activeTab, userInfo, onHotelSelect, selectedHotel, onEditHotel, onDeleteHotel, refreshKey }: MyHotelProps) {
   const [hotels, setHotels] = useState<Hotel[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -65,7 +66,7 @@ export default function MyHotel({ activeTab, userInfo, onHotelSelect, selectedHo
     if (userInfo) {
       fetchUserHotels(userInfo.id);
     }
-  }, [userInfo]);
+  }, [userInfo, refreshKey]);
 
   const fetchUserHotels = async (userId: string) => {
     setLoading(true);

@@ -581,15 +581,14 @@
       "id": "5",
       "userId": "3",
       "status": "未通过",
-      "rejectReason": "酒店位置信息不准确，需要提供详细的地址和交通说明。",
       "message": {
         "id": 5,
         "name": "上海素凯泰酒店",
         "star": 4,
-        "point": 4.6,
-        "rank": "很棒",
-        "like": 1563,
-        "favorites": "2.1万收藏",
+        "point": 4.9,
+        "rank": "超棒",
+        "like": 2318,
+        "favorites": "2.7万收藏",
         "image": "https://ts3.tc.mm.bing.net/th/id/OIP-C.1aQueqNoQenRH1-UrBacYQHaE8?rs=1&pid=ImgDetMain&o=7&rm=3",
         "position": "静安区 · 兴业太古汇",
         "address": "静安区威海路380号",
@@ -600,7 +599,7 @@
           "意大利餐厅",
           "近地铁站"
         ],
-        "Ranking": "上海静奢酒店榜 No.8",
+        "Ranking": "上海情侣酒店榜 No.46",
         "price": 1180,
         "supplement": "限时特惠 早餐赠送 3项优惠"
       },
@@ -656,7 +655,8 @@
           "tags": [
             "免费取消",
             "含早餐",
-            "立即确认"
+            "立即确认",
+            "含午餐"
           ]
         },
         {
@@ -714,7 +714,8 @@
       "timePolicy": [
         "14:00",
         "12:00"
-      ]
+      ],
+      "rejectReason": "测试用，图片不合适"
     },
     {
       "id": "6",

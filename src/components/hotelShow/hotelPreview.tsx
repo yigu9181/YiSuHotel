@@ -215,6 +215,7 @@ export default function HotelPreview({ hotelData, isActive, onRoomClick, onHotel
             ))}
           </Swiper>
         </View>
+        <View className='preview-hotel-content'>
 
         <View className='preview-hotel-message'>
           <View className='preview-hexagon'>
@@ -311,6 +312,7 @@ export default function HotelPreview({ hotelData, isActive, onRoomClick, onHotel
               </View>
             </View>
           ))}
+        </View>
         </View>
       </View>
       </View>
