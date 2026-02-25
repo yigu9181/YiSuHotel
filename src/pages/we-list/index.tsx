@@ -1,7 +1,7 @@
 import { View, Text} from '@tarojs/components'
-import Taro, { useLoad, useReachBottom } from '@tarojs/taro'
+import Taro, { useLoad } from '@tarojs/taro'
 import { useSelector , useDispatch } from 'react-redux'
-import React,{ useState, useEffect, useRef } from 'react'
+import React,{ useState, useEffect } from 'react'
 import { getMouth, getDay, getWeek, getDaysBetween } from '@/utils/calendar'
 import { choosePositon, changeDate, backToLastPage } from '@/utils/navigate'
 import { setChooseHotel } from '@/store/hotel/chooseHotel'
@@ -13,41 +13,11 @@ export default function Index () {
   const [allHotels, setAllHotels] = useState<any[]>([])
   const [displayHotels, setDisplayHotels] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
-  const [loadingMore, setLoadingMore] = useState(false)
-  const [hasMore, setHasMore] = useState(true)
-  const [currentPage, setCurrentPage] = useState(1)
-  const loadMoreRef = useRef<any>(null)
 
   useLoad(() => {
     console.log('Page loaded.')
     fetchHotelList()
   })
-
-  useEffect(() => {
-    // 在Taro环境中使用Taro的IntersectionObserver来检测倒数第二个酒店元素
-    const observer = Taro.createIntersectionObserver(null, {
-      threshold: 0.1
-    })
-    
-    // 观察倒数第二个酒店元素，相对于.hotel容器
-    observer.relativeTo('.hotel', {
-      top: 0,
-      bottom: 0,
-      left: 0,
-      right: 0
-    })
-      .observe('.load-more-trigger', (res) => {
-        console.log('触发加载更多:', res, 'hasMore:', hasMore, 'loadingMore:', loadingMore)
-        if (res.intersectionRatio > 0 && hasMore && !loadingMore) {
-          // 等待0.5秒后加载更多
-          setTimeout(() => {
-            loadMoreHotels()
-          }, 500)
-        }
-      })
-    
-    return () => observer.disconnect()
-  }, [hasMore, loadingMore, displayHotels.length])
 
   const fetchHotelList = async () => {
     setLoading(true)
@@ -62,11 +32,8 @@ export default function Index () {
             hotelId: hotel.id
           }))
         setAllHotels(messageList)
-        // 只显示前5个酒店
-        setDisplayHotels(messageList.slice(0, 5))
-        // 检查是否还有更多酒店
-        setHasMore(messageList.length > 5)
-        setCurrentPage(1)
+        // 一次性显示所有酒店
+        setDisplayHotels(messageList)
       }
     } catch (error) {
       console.error('获取酒店列表失败:', error)
@@ -76,52 +43,6 @@ export default function Index () {
       })
     } finally {
       setLoading(false)
-    }
-  }
-
-  const loadMoreHotels = async () => {
-    console.log('开始加载更多', 'currentPage:', currentPage, 'allHotels.length:', allHotels.length, 'displayHotels.length:', displayHotels.length)
-    if (loadingMore || !hasMore) {
-      console.log('跳过加载更多', 'loadingMore:', loadingMore, 'hasMore:', hasMore)
-      return
-    }
-
-    setLoadingMore(true)
-    try {
-      // 计算下一页要显示的酒店数量，每次加载5个
-      const nextPage = currentPage + 1
-      const startIndex = currentPage * 5
-      const endIndex = startIndex + 5
-
-      console.log('加载参数', 'startIndex:', startIndex, 'endIndex:', endIndex)
-
-      // 确保startIndex不超过allHotels.length
-      if (startIndex >= allHotels.length) {
-        console.log('startIndex >= allHotels.length', 'startIndex:', startIndex, 'allHotels.length:', allHotels.length)
-        setHasMore(false)
-        return
-      }
-
-      // 获取剩余的酒店，即使不足5个
-      const newHotels = allHotels.slice(startIndex, endIndex)
-      console.log('加载到的酒店数量:', newHotels.length)
-
-      if (newHotels.length > 0) {
-        setDisplayHotels(prev => [...prev, ...newHotels])
-        setCurrentPage(nextPage)
-        // 检查是否还有更多酒店
-        const hasMoreHotels = endIndex < allHotels.length
-        console.log('检查是否还有更多酒店', 'endIndex:', endIndex, 'allHotels.length:', allHotels.length, 'hasMoreHotels:', hasMoreHotels)
-        setHasMore(hasMoreHotels)
-      } else {
-        console.log('没有加载到酒店')
-        setHasMore(false)
-      }
-    } catch (error) {
-      console.error('加载更多酒店失败:', error)
-    } finally {
-      setLoadingMore(false)
-      console.log('加载更多完成')
     }
   }
 
@@ -149,10 +70,8 @@ export default function Index () {
         newList.sort((a, b) => b.point - a.point)
       }
 
-      // 重新设置显示的酒店，只显示前5个
-      setDisplayHotels(newList.slice(0, 5))
-      setCurrentPage(1)
-      setHasMore(newList.length > 5)
+      // 一次性显示所有酒店
+      setDisplayHotels(newList)
     }, 300)
   }
   const { priceRange, hotelStar, Labels } = useSelector((state: any) => state.hotelLabel)
@@ -244,22 +163,10 @@ export default function Index () {
         ) : displayHotels.length > 0 ? (
           <>
             {displayHotels.map((i, index) => (
-              <View key={i.id} className={index === displayHotels.length - 2 ? 'load-more-trigger' : ''}>
+              <View key={i.id}>
                 <HotelShow i={i} onClick={() => dispatch(setChooseHotel({ hotelId: i.hotelId }))} />
               </View>
             ))}
-            {/* 加载更多指示器 */}
-            {loadingMore && (
-              <View style={{ padding: '20px', textAlign: 'center' }}>
-                <Text>加载中...</Text>
-              </View>
-            )}
-            {/* 无更多酒店提示 */}
-            {!hasMore && displayHotels.length > 0 && (
-              <View style={{  textAlign: 'center', color: '#999' }}>
-                <Text>没有更多酒店了</Text>
-              </View>
-            )}
           </>
         ) : (
           <View style={{  textAlign: 'center' }}>

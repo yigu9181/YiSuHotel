@@ -17,6 +17,18 @@
       "username": "12345",
       "password": "780860qwE",
       "ID": "用户"
+    },
+    {
+      "id": "4",
+      "username": "123",
+      "password": "780860qwE",
+      "ID": "用户"
+    },
+    {
+      "id": "5",
+      "username": "1234",
+      "password": "780860qwE",
+      "ID": "用户"
     }
   ],
   "hotels": [
@@ -1453,7 +1465,7 @@
         "introduction": "绅士淑女服务绅士淑女 · 云端奢华体验",
         "label": [
           "高空景观",
-          "米其林餐厅",
+          "设计感",
           "行政酒廊",
           "无边泳池",
           "近地铁站"
@@ -1558,132 +1570,9 @@
       ]
     },
     {
-      "id": "13",
-      "userId": "3",
-      "status": "已发布",
-      "rejectReason": "",
-      "message": {
-        "id": 13,
-        "name": "上海阿纳迪酒店",
-        "star": 5,
-        "point": 4.6,
-        "rank": "超棒",
-        "like": 1654,
-        "favorites": "2.5万收藏",
-        "image": "https://ts1.tc.mm.bing.net/th/id/R-C.a75694dc32d729376c39199dc8648cac?rik=hyACihWbllgB3w&riu=http%3a%2f%2fimage.lhw.cn%2fimages%2fe396b03b198b75b1_1600_700.jpg&ehk=1bdaOxwm8oe68Uj7od19spKwPDJzzUY8pTanEQTwIMg%3d&risl=&pid=ImgRaw&r=0",
-        "position": "虹桥 · 临虹路",
-        "address": "长宁区临虹路7号",
-        "introduction": "养生疗愈 · 都市中的身心灵栖息地",
-        "label": [
-          "SPA水疗",
-          "静谧花园",
-          "管家服务",
-          "免费停车",
-          "近地铁站"
-        ],
-        "Ranking": "上海养生酒店榜 No.1",
-        "price": 1288,
-        "supplement": "含养生课程 疗愈体验 2项权益"
-      },
-      "bannerList": [
-        {
-          "id": 1,
-          "image": "https://ts1.tc.mm.bing.net/th/id/R-C.a75694dc32d729376c39199dc8648cac?rik=hyACihWbllgB3w&riu=http%3a%2f%2fimage.lhw.cn%2fimages%2fe396b03b198b75b1_1600_700.jpg&ehk=1bdaOxwm8oe68Uj7od19spKwPDJzzUY8pTanEQTwIMg%3d&risl=&pid=ImgRaw&r=0"
-        },
-        {
-          "id": 2,
-          "image": "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=800"
-        },
-        {
-          "id": 3,
-          "image": "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800"
-        }
-      ],
-      "facilitiesList": [
-        {
-          "text": "网红酒店",
-          "icon": "icon-jiudian"
-        },
-        {
-          "text": "设计感",
-          "icon": "icon-sheji"
-        },
-        {
-          "text": "行政酒廊",
-          "icon": "icon-hangzhengjiulang"
-        },
-        {
-          "text": "高空景观",
-          "icon": "icon-w_fengjing"
-        },
-        {
-          "text": "一线江景",
-          "icon": "icon-Golden-GateBridge"
-        }
-      ],
-      "roomList": [
-        {
-          "id": 1,
-          "name": "喜悦房",
-          "price": 1288,
-          "image": "https://images.unsplash.com/photo-1590490360182-c33d57733427?w=800",
-          "detail": [
-            "1张1.8米大床",
-            "45㎡",
-            "2人入住",
-            "3-8层"
-          ],
-          "introduction": "纳米能量地板，疗愈音乐，助眠香薰，配备血压仪和体质测试。",
-          "tags": [
-            "免费取消",
-            "含早餐",
-            "立即确认"
-          ]
-        },
-        {
-          "id": 2,
-          "name": "衡悦房",
-          "price": 1688,
-          "image": "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800",
-          "detail": [
-            "1张2.0米特大床",
-            "55㎡",
-            "2人入住",
-            "9-12层"
-          ],
-          "introduction": "专属疗愈管家，私人阳台，深度SPA体验，定制养生餐食。",
-          "tags": [
-            "免费取消",
-            "含早餐",
-            "立即确认"
-          ]
-        }
-      ],
-      "filterTagList": [
-        "免费取消",
-        "含早餐",
-        "养生房",
-        "立即确认"
-      ],
-      "amenitiesList": [
-        "吹风机",
-        "空调",
-        "智能电视",
-        "保险箱",
-        "天然洗护",
-        "迷你吧",
-        "蓝牙音箱",
-        "血压仪"
-      ],
-      "timePolicy": [
-        "15:00",
-        "12:00"
-      ]
-    },
-    {
       "id": "14",
       "userId": "3",
-      "status": "已下线",
+      "status": "已发布",
       "rejectReason": "",
       "message": {
         "id": 14,
@@ -1802,6 +1691,122 @@
         "15:00",
         "12:00"
       ]
+    },
+    {
+      "id": "15",
+      "userId": "3",
+      "status": "已下线",
+      "message": {
+        "id": 15,
+        "name": "11111",
+        "star": 5,
+        "point": 4.6,
+        "rank": "超棒",
+        "like": 2228,
+        "favorites": "8.7万收藏",
+        "image": "http://localhost:3001/images/image_1772017572319_k5g3goc0.png",
+        "position": "444",
+        "address": "5555",
+        "introduction": "222",
+        "label": [
+          "123",
+          "234",
+          "456"
+        ],
+        "Ranking": "上海美景酒店榜 No.37",
+        "price": 333,
+        "supplement": "6666"
+      },
+      "bannerList": [
+        {
+          "id": 1,
+          "image": "http://localhost:3001/images/image_1772017596103_icy61qfr.png"
+        },
+        {
+          "id": 2,
+          "image": "http://localhost:3001/images/image_1772017598981_veklr5fs.png"
+        },
+        {
+          "id": 3,
+          "image": "http://localhost:3001/images/image_1772017602808_2swcjpfc.png"
+        }
+      ],
+      "facilitiesList": [
+        {
+          "text": "网红酒店",
+          "icon": "icon-jiudian"
+        },
+        {
+          "text": "露天泳池",
+          "icon": "icon-youyongchi"
+        },
+        {
+          "text": "米其林餐厅",
+          "icon": "icon-fork-knife"
+        },
+        {
+          "text": "历史名宅",
+          "icon": "icon-homestay"
+        },
+        {
+          "text": "江景下用餐",
+          "icon": "icon-a-godutch"
+        }
+      ],
+      "roomList": [
+        {
+          "id": 1,
+          "name": "aaa",
+          "price": 1223,
+          "image": "http://localhost:3001/images/image_1772017638260_ne6rj7f4.png",
+          "detail": [
+            "111",
+            "222",
+            "333",
+            "444"
+          ],
+          "introduction": "1111111",
+          "tags": [
+            "1111",
+            "2222222",
+            "3333"
+          ]
+        },
+        {
+          "id": 2,
+          "name": "bbb",
+          "price": 3233,
+          "image": "http://localhost:3001/images/image_1772017658449_sq0djcg4.png",
+          "detail": [
+            "121",
+            "1234",
+            "341",
+            "351"
+          ],
+          "introduction": "12412",
+          "tags": [
+            "1241",
+            "21412",
+            "124421"
+          ]
+        }
+      ],
+      "filterTagList": [
+        "3232",
+        "31213",
+        "131"
+      ],
+      "amenitiesList": [
+        "6556",
+        "4545",
+        "2324",
+        "2323"
+      ],
+      "timePolicy": [
+        "11-11",
+        "22-22"
+      ],
+      "rejectReason": ""
     }
   ]
 }
